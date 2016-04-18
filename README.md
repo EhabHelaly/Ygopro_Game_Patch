@@ -8,4 +8,5 @@ Cards lua scripts and texts.
 3- merge all records in "Text" and "Data" tables in Cards.cdb with those in cards.cdb
 
 Patch Complete!!
+
 Note: For card textures; simply request them through https://github.com/EhabHelaly
