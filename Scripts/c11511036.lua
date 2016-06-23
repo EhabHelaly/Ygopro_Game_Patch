@@ -56,10 +56,16 @@ function c11511036.cfilter(c,s)
 	return c:GetLevel()>0 and c:IsFaceup() and c:IsSetCard(0xff) and c:GetSequence()==s
 end
 function c11511036.condition(e,tp,eg,ep,ev,re,r,rp)
-	local x="00"
-	local y="0000000000"
+	if re:GetHandler():IsCode(11511036) or not e:GetHandler():IsFaceup() then
+        e:GetLabelObject():SetLabel(0)
+        return false
+    end
+	local x
+	local y
 	for seq=0,4 do
-        if Duel.CheckLocation(tp,LOCATION_MZONE,seq) or not e:GetHandler():IsFaceup() then x="00" else
+        if Duel.CheckLocation(tp,LOCATION_MZONE,seq)  then
+            x="00"
+        else
             local g=Duel.GetMatchingGroup(c11511036.cfilter,tp,LOCATION_MZONE,0,nil,seq)
             if g:GetCount()>0 then
                 local tc=g:GetFirst()
