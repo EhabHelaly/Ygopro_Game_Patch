@@ -71,7 +71,7 @@ function c11511011.Xop(e,tp,eg,ep,ev,re,r,rp)
 	   	  e1:SetValue(c11511011.filterX)
           e1:SetCondition(c11511011.Xxcon)
 		  e1:SetOwnerPlayer(tp)
-		  e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+RESET_END)
+		  e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
           rc:RegisterEffect(e1,true)
             if not rc:IsType(TYPE_EFFECT) then
             local e2=Effect.CreateEffect(c)
