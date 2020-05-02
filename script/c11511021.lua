@@ -1,7 +1,7 @@
 --Elegantea Sniper Lilith
 function c11511021.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfff),aux.NonTuner(Card.IsSetCard,0xfff),1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfff),1,1,aux.NonTuner(Card.IsSetCard,0xfff),1,1)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -49,14 +49,14 @@ function c11511021.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(c11511021.efilter)
 	e1:SetCondition(c11511021.negcon)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end

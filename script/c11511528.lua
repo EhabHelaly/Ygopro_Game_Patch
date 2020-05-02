@@ -18,6 +18,7 @@ function c11511528.initial_effect(c)
 
 end
 function c11511528.filterF(c)
+	if not Card.IsFusionAttribute then Card.IsFusionAttribute = Card.IsAttribute end
 	return c:IsFusionSetCard(0xffa) and c:IsFusionAttribute(ATTRIBUTE_DARK)
 end
 function c11511528.filter(c)

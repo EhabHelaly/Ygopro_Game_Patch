@@ -22,18 +22,18 @@ function c11511245.initial_effect(c)
 end
 function c11511245.filter1(c,e,tp)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
-		 and (c:GetSequence()==6 or c:GetSequence()==7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c11511245.filter2(c)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c11511245.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-					and Duel.IsExistingTarget(c11511245.filter1,tp,LOCATION_SZONE,0,1,nil,e,tp)
+					and Duel.IsExistingTarget(c11511245.filter1,tp,LOCATION_PZONE,0,1,nil,e,tp)
 					and Duel.IsExistingTarget(c11511245.filter2,tp,LOCATION_MZONE,0,1,nil) end
 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,c11511245.filter1,tp,LOCATION_SZONE,0,1,1,nil,e,tp)
+	local g1=Duel.SelectTarget(tp,c11511245.filter1,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g2=Duel.SelectTarget(tp,c11511245.filter2,tp,LOCATION_MZONE,0,1,1,nil)
     e:SetLabelObject(g1:GetFirst())
@@ -45,12 +45,7 @@ function c11511245.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc1==tc2 then tc2=g:GetNext() end
 	if tc1:IsRelateToEffect(e) and tc2:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP)
-		if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-	    	Duel.MoveToField(tc2,tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-	    elseif Duel.CheckLocation(tp,LOCATION_SZONE,7) then
-	    	Duel.MoveToField(tc2,tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-	    end
-
+	    Duel.MoveToField(tc2,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
 function c11511245.filterAtt(c,att)

@@ -20,7 +20,7 @@ end
 function c11511460.op(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c11511460.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	ft=ft-1;
@@ -42,7 +42,7 @@ function c11511460.op(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		while tc do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(11511460,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(11511460,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()

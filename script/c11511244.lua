@@ -32,7 +32,7 @@ function c11511244.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(11511244,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(11511244,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()

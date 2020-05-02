@@ -81,16 +81,16 @@ function c11511307.op3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c11511307.filter1(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xffc) and ( c:GetSequence()==6 or c:GetSequence()==7 )
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xffc)
 end
 function c11511307.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c11511307.filter1,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c11511307.filter1,tp,LOCATION_PZONE,0,1,nil) end
 end
 function c11511307.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c11511307.filter1,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c11511307.filter1,tp,LOCATION_PZONE,0,1,1,nil)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		local value=1
@@ -101,7 +101,7 @@ function c11511307.op1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LSCALE)
 		e1:SetValue(value)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_RSCALE)

@@ -32,8 +32,8 @@ function c11511320.target(e,c)
 	return c:IsSetCard(0xffc) and c:IsStatus(STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN) 
 end
 function c11511320.filter(c)
-	return c:IsSetCard(0xffc) and c:IsType(TYPE_PENDULUM) and ( c:GetSequence()==6 or c:GetSequence()==7 )
+	return c:IsSetCard(0xffc) and c:IsType(TYPE_PENDULUM)
 end
 function c11511320.sdcon(e)
-	return not Duel.IsExistingMatchingCard(c11511320.filter,e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(c11511320.filter,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end

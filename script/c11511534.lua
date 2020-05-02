@@ -28,13 +28,16 @@ function c11511534.initial_effect(c)
 	e1:SetOperation(c11511534.op)
 	c:RegisterEffect(e1)	
 end
+function c11511534.FConditionCheckF(c,chkf)
+	return c:IsOnField() and c:IsControler(chkf)
+end
 function c11511534.fscon(e,g,gc,chkf)
 	if g==nil then return true end
 	local mg=g:Filter(Card.IsFusionSetCard,nil,0xffa)
 	mg=mg:Filter(Card.IsType,nil,TYPE_MONSTER)
 
 	local fs=false
-	if mg:IsExists(aux.FConditionCheckF,1,nil,chkf) then fs=true end
+	if mg:IsExists(c11511534.FConditionCheckF,1,nil,chkf) then fs=true end
 	return mg:GetClassCount(Card.GetRace)>=4 and (fs or chkf==PLAYER_NONE)
 end
 function c11511534.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
@@ -87,7 +90,7 @@ function c11511534.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(g:GetCount()*400)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 
 	end

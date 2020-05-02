@@ -2,8 +2,8 @@
 function c11511231.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(c11511231.filterS,ATTRIBUTE_DARK),aux.NonTuner(c11511231.filterS,ATTRIBUTE_EARTH),aux.Stringid(11511231,0))
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(c11511231.filterS,ATTRIBUTE_EARTH),aux.NonTuner(c11511231.filterS,ATTRIBUTE_DARK),aux.Stringid(11511231,1))
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(c11511231.filterS,ATTRIBUTE_DARK),1,1,aux.NonTuner(c11511231.filterS,ATTRIBUTE_EARTH),1,1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(c11511231.filterS,ATTRIBUTE_EARTH),1,1,aux.NonTuner(c11511231.filterS,ATTRIBUTE_DARK),1,1)
 	-- add attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -39,7 +39,7 @@ function c11511231.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(att)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

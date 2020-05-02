@@ -3,7 +3,7 @@ function c11511311.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffc),aux.NonTuner(Card.IsSetCard,0xffc),1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffc),1,1,aux.NonTuner(Card.IsSetCard,0xffc),1,1)
 	c:EnableReviveLimit()
 
 	-- unaffected by card (Synchro Summon)

@@ -50,7 +50,7 @@ function c11511607.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Remove(e:GetHandler(), POS_FACEUP, REASON_EFFECT+REASON_COST)
 end
 function c11511607.targetT(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,11511601,0,TYPE_TOKEN+TYPE_NORMAL+TYPE_NORMAL,0,3000,1,RACE_ROCK,ATTRIBUTE_EARTH)
 	end
@@ -58,7 +58,7 @@ function c11511607.targetT(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c11511607.operationT(e,tp,eg,ep,ev,re,r,rp)
-	if  not Duel.IsPlayerAffectedByEffect(tp,59822133) 
+	if  not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,11511601,0,TYPE_TOKEN+TYPE_NORMAL+TYPE_NORMAL,0,3000,1,RACE_ROCK,ATTRIBUTE_EARTH)
 	then

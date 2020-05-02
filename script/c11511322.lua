@@ -37,9 +37,6 @@ function c11511322.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if c and c:IsFaceup() then Duel.Equip(tp,e:GetHandler(),c) end
 end
 
-function c11511322.pfilter(c)
-	return c:IsSetCard(0xffc) and (c:GetSequence()==6 or c:GetSequence()==7)
-end
 function c11511322.dfilter(c)
 	return c:IsSetCard(0xffc) and c:IsAbleToHand()
 end
@@ -47,9 +44,9 @@ function c11511322.con(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	return e:GetHandler():GetEquipTarget()
 end
 function c11511322.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk ==0 then return Duel.IsExistingTarget(c11511322.pfilter,tp,LOCATION_SZONE,0,1,nil)
+	if chk ==0 then return Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,0xffc)
 						and Duel.IsExistingMatchingCard(c11511322.dfilter,tp,LOCATION_DECK,0,1,nil) end
-	local tc=Duel.SelectTarget(tp,c11511322.pfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local tc=Duel.SelectTarget(tp,Card.IsSetCard,tp,LOCATION_PZONE,0,1,1,nil,0xffc)
 	local g=Group.FromCards(e:GetHandler(),tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND+CATEGORY_SEARCH,nil,1,tp,0)
@@ -60,11 +57,7 @@ function c11511322.op(e,tp,eg,ep,ev,re,r,rp)
 	if ec and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then 
 		local g=Group.FromCards(e:GetHandler(),tc)
 		if Duel.Destroy(g,REASON_COST) then
-			if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-		    	Duel.MoveToField(ec,tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-		    else
-		    	Duel.MoveToField(ec,tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-		    end
+		    Duel.MoveToField(ec,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 
 		    local g2=Duel.SelectMatchingCard(tp,c11511322.dfilter,tp,LOCATION_DECK,0,1,1,nil)
 		    if g2:GetCount() then

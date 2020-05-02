@@ -72,7 +72,7 @@ function c11511604.filterSp(c,e,tp,code)
 	and not( c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(EFFECT_NECRO_VALLEY) )
 end
 function c11511604.targetSp(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3
 		and Duel.IsExistingMatchingCard(c11511604.filterSp,tp,e:GetLabel(),0,1,nil,e,tp,10000020)
 		and Duel.IsExistingMatchingCard(c11511604.filterSp,tp,e:GetLabel(),0,1,nil,e,tp,10000010)
@@ -80,7 +80,7 @@ function c11511604.targetSp(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function c11511604.operationSp(e,tp,eg,ep,ev,re,r,rp)
-	if 	not Duel.IsPlayerAffectedByEffect(tp,59822133)
+	if 	not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3
 		and Duel.IsExistingMatchingCard(c11511604.filterSp,tp,e:GetLabel(),0,1,nil,e,tp,10000020)
 		and Duel.IsExistingMatchingCard(c11511604.filterSp,tp,e:GetLabel(),0,1,nil,e,tp,10000010)

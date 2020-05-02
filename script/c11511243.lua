@@ -21,13 +21,9 @@ end
 function c11511243.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c11511243.filterP,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		if(Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) and Duel.SelectYesNo(tp,aux.Stringid(11511243,0)) 
+		if Duel.GetLocationCount(tp,LOCATION_PZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(11511243,0)) 
 		then
-		    if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-		    	Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-		    else
-		    	Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-		    end
+		    Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		else
 			Duel.SendtoHand(g,tp,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

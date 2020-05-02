@@ -39,7 +39,7 @@ function c11511027.filter(c)
 end
 function c11511027.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c11511027.filter,tp,LOCATION_MZONE,0,1,nil) end
-    	e:GetHandler():RegisterFlagEffect(11511027,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+    	e:GetHandler():RegisterFlagEffect(11511027,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function c11511027.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c11511027.filter,tp,LOCATION_MZONE,0,nil)
@@ -49,7 +49,7 @@ function c11511027.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end

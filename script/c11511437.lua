@@ -1,7 +1,7 @@
 --SW Ally Zhang He
 function c11511437.initial_effect(c)
 	c:SetUniqueOnField(1,0,11511437)
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(Card.IsSetCard,0xffb),aux.NonTuner(Card.IsCode,11511425))
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffb),1,1,aux.NonTuner(Card.IsCode,11511425),1,1)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)

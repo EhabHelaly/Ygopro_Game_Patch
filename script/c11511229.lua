@@ -2,8 +2,9 @@
 function c11511229.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(c11511229.filterS,ATTRIBUTE_WATER),aux.NonTuner(c11511229.filterS,ATTRIBUTE_WIND))
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(c11511229.filterS,ATTRIBUTE_WIND),aux.NonTuner(c11511229.filterS,ATTRIBUTE_WATER))
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(c11511229.filterS,ATTRIBUTE_WATER),1,1,aux.NonTuner(c11511229.filterS,ATTRIBUTE_WIND),1,1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(c11511229.filterS,ATTRIBUTE_WIND),1,1,aux.NonTuner(c11511229.filterS,ATTRIBUTE_WATER,1,1)
+	
 	-- add counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -13,10 +14,9 @@ function c11511229.initial_effect(c)
 	e1:SetTarget(c11511229.target)
 	e1:SetOperation(c11511229.operation)
 	c:RegisterEffect(e1)
-
 end
 function c11511229.filterS(c,att)
-	return c:IsSetCard(0xffd) and c:IsAttribute(att) 
+	return c:IsSetCard(0xffd) and c:IsAttribute(att)
 end
 function c11511229.filterC(c)
 	return c:IsSetCard(0xffd) and c:IsType(TYPE_MONSTER) and c:IsCanAddCounter(0xffd,1)

@@ -18,6 +18,7 @@ function c11511521.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c11511521.filterF(c)
+	if not Card.IsFusionAttribute then Card.IsFusionAttribute = Card.IsAttribute end
 	return c:IsFusionSetCard(0xffa) and c:IsFusionAttribute(ATTRIBUTE_WATER)
 end
 function c11511521.filter(c,att)
@@ -39,7 +40,7 @@ function c11511521.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 
 	end

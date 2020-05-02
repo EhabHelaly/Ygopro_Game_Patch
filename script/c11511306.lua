@@ -35,7 +35,7 @@ function c11511306.op1(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(500)
 		c:RegisterEffect(e1)
 end
@@ -50,11 +50,7 @@ function c11511306.op3(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(e:GetHandler(),REASON_EFFECT) then
 		local g2=Duel.SelectMatchingCard(tp,c11511306.filterE,tp,LOCATION_EXTRA,0,1,1,nil)
 		if g2:GetCount()>0 then
-		    if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-		    	Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-		    else
-		    	Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-		    end
+		    Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		end
 	end
 end

@@ -1,7 +1,7 @@
 --Elegantea Exorcist Raine
 function c11511023.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfff),aux.NonTuner(Card.IsSetCard,0xfff),1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfff),1,1,aux.NonTuner(Card.IsSetCard,0xfff),1,1)
 	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -53,14 +53,14 @@ function c11511023.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(c11511023.negcon)
 	e1:SetTarget(c11511023.negtarget)
 	e1:SetOperation(c11511023.negoperation)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end

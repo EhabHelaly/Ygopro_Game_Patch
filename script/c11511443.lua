@@ -1,7 +1,7 @@
 --SW Ally Fu Xi
 function c11511443.initial_effect(c)
 	c:SetUniqueOnField(1,0,11511443)
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(Card.IsSetCard,0xffb),aux.NonTuner(Card.IsCode,11511421))
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffb),1,1,aux.NonTuner(Card.IsCode,11511421),1,1)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)

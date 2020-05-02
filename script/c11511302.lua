@@ -35,20 +35,16 @@ function c11511302.filterPC(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsPosition(POS_FACEUP)
 end
 function c11511302.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7))
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_PZONE)>0
 		and Duel.IsExistingMatchingCard(c11511302.filterPC,tp,LOCATION_EXTRA,0,1,nil) end
 end
 function c11511302.op1(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if not (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) then return end
+	if Duel.GetLocationCount(tp,LOCATION_PZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,c11511302.filterPC,tp,LOCATION_EXTRA,0,1,1,nil)
 	if g:GetCount()>0 then
-	    if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-	    	Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-	    else
-	    	Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-	    end
+	    Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
 

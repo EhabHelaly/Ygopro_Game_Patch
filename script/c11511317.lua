@@ -9,19 +9,19 @@ function c11511317.initial_effect(c)
 
 end
 function c11511317.filter1(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xffc) and ( c:GetSequence()==6 or c:GetSequence()==7 )
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xffc)
 end
 function c11511317.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c11511317.filter1,tp,LOCATION_SZONE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c11511317.filter1,tp,LOCATION_PZONE,0,2,nil) end
 end
 function c11511317.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,c11511317.filter1,tp,LOCATION_SZONE,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,c11511317.filter1,tp,LOCATION_PZONE,0,1,1,nil)
 	if g1:GetCount()>0 then
 		local tc1=g1:GetFirst()
-		local g2=Duel.SelectTarget(tp,c11511317.filter1,tp,LOCATION_SZONE,0,1,1,tc1)
+		local g2=Duel.SelectTarget(tp,c11511317.filter1,tp,LOCATION_PZONE,0,1,1,tc1)
 		if g2:GetCount()>0 then
 			local tc2=g2:GetFirst()
 			-- increase first
@@ -29,7 +29,7 @@ function c11511317.op1(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LSCALE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc1:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_RSCALE)
@@ -39,7 +39,7 @@ function c11511317.op1(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_UPDATE_LSCALE)
 			e3:SetValue(-1)
-			e3:SetReset(RESET_EVENT+0x1fe0000)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc2:RegisterEffect(e3)
 			local e4=e3:Clone()
 			e4:SetCode(EFFECT_UPDATE_RSCALE)

@@ -1,7 +1,7 @@
 --Elegantea Vampire Zadicus
 function c11511024.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfff),aux.NonTuner(Card.IsSetCard,0xfff),1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfff),1,1,aux.NonTuner(Card.IsSetCard,0xfff),1,1)
 	c:EnableReviveLimit()
     -- lv change
     local e1=Effect.CreateEffect(c)
@@ -39,14 +39,14 @@ function c11511024.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(c11511024.spcon)
 	e1:SetTarget(c11511024.tg)
 	e1:SetOperation(c11511024.spop)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
@@ -95,7 +95,7 @@ function c11511024.targetM(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
          e:SetLabelObject(g1:GetFirst())
          Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(11511024,2))
          local g2=Duel.SelectTarget(tp,c11511024.filterM2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst())
-    	 e:GetHandler():RegisterFlagEffect(11511024,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+    	 e:GetHandler():RegisterFlagEffect(11511024,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
  end
 function c11511024.operationM(e,tp,eg,ep,ev,re,r,rp)
 	local hc=e:GetLabelObject()
@@ -107,14 +107,14 @@ function c11511024.operationM(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
         e1:SetValue(1)
 		if hc:RegisterEffect(e1) then
 			local e2=Effect.CreateEffect(e:GetHandler())
             e2:SetType(EFFECT_TYPE_SINGLE)
             e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
             e2:SetCode(EFFECT_UPDATE_LEVEL)
-            e2:SetReset(RESET_EVENT+0x1fe0000)
+            e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e2:SetValue(-1)
             tc:RegisterEffect(e2)
 		end

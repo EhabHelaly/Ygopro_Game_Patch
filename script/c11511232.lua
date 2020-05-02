@@ -51,7 +51,7 @@ function c11511232.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(att)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e1)
 		end
 	end

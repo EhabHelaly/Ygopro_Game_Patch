@@ -57,7 +57,7 @@ local cardsList = {}
 function c11511007.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c11511007.cfilter,tp,LOCATION_MZONE,0,nil)
 	cardsList = {}
-	for i=1,g:GetCount() do
+	for i=1,#g do
 		local c
 		if i==1 then c = g:GetFirst() else c = g:GetNext() end
 		local card_info = {}
@@ -124,7 +124,7 @@ function c11511007.targetM(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
          e:SetLabelObject(g1:GetFirst())
          Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(11511007,2))
          local g2=Duel.SelectTarget(tp,c11511007.filterM2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst())
-    	 e:GetHandler():RegisterFlagEffect(11511007,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+    	 e:GetHandler():RegisterFlagEffect(11511007,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
  end
 function c11511007.operationM(e,tp,eg,ep,ev,re,r,rp)
 	local hc=e:GetLabelObject()
@@ -136,14 +136,14 @@ function c11511007.operationM(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
         e1:SetValue(1)
 		if hc:RegisterEffect(e1) then
 			local e2=Effect.CreateEffect(e:GetHandler())
             e2:SetType(EFFECT_TYPE_SINGLE)
             e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
             e2:SetCode(EFFECT_UPDATE_LEVEL)
-            e2:SetReset(RESET_EVENT+0x1fe0000)
+            e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e2:SetValue(-1)
             tc:RegisterEffect(e2)
 		end

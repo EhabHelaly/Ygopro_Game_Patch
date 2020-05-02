@@ -119,7 +119,7 @@ function c11511321.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCategory(CATEGORY_ATKCHANGE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(pScales*-100)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			rc:RegisterEffect(e1)
 			rc=g:GetNext()
 		end

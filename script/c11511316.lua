@@ -32,18 +32,14 @@ function c11511316.filterD(c,loc)
 	end
 end
 function c11511316.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7))
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_PZONE)>0
 		and Duel.IsExistingMatchingCard(c11511316.filterD,tp,e:GetLabel(),0,1,nil,e:GetLabel()) end
 end
 function c11511316.op(e,tp,eg,ep,ev,re,r,rp)
-	if not (Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)) then return end
+	if Duel.GetLocationCount(tp,LOCATION_PZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,c11511316.filterD,tp,e:GetLabel(),0,1,1,nil,e:GetLabel())
 	if g:GetCount()>0 then
-	    if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-	    	Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-	    else
-	    	Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-	    end
+	    Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end

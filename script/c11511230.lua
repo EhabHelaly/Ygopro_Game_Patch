@@ -2,8 +2,8 @@
 function c11511230.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(c11511230.filterS,ATTRIBUTE_FIRE),aux.NonTuner(c11511230.filterS,ATTRIBUTE_LIGHT))
-	aux.AddSynchroProcedure2(c,aux.FilterBoolFunction(c11511230.filterS,ATTRIBUTE_LIGHT),aux.NonTuner(c11511230.filterS,ATTRIBUTE_FIRE))
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(c11511230.filterS,ATTRIBUTE_FIRE),1,1,aux.NonTuner(c11511230.filterS,ATTRIBUTE_LIGHT),1,1)
+	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(c11511230.filterS,ATTRIBUTE_LIGHT),1,1,aux.NonTuner(c11511230.filterS,ATTRIBUTE_FIRE),1,1)
 	-- add pendulum to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)

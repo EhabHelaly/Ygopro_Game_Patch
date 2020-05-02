@@ -28,6 +28,7 @@ function c11511522.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c11511522.filterF(c)
+	if not Card.IsFusionAttribute then Card.IsFusionAttribute = Card.IsAttribute end
 	return c:IsFusionSetCard(0xffa) and c:IsFusionAttribute(ATTRIBUTE_FIRE)
 end
 function c11511522.filter(c)

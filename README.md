@@ -1,8 +1,8 @@
 # Ygopro_Game_Patch
 
-1- merge script and expansions folder with their correspondent folders in game directory 
+1- merge script and expansions folders with their correspondent folders in game directory 
 
-2- add the content of setname.txt and strings.conf files to their correspondent files in game directory  
+2- add the content of strings.conf file to its correspondent file in game directory  
 
 3- download pics.7z from this [link](https://drive.google.com/open?id=1tU-RjMRmD78ZRlCV1bcrW5rbnQr0vERr)
 

@@ -81,7 +81,7 @@ function c11511043.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
         e1:SetTarget(c11511043.drtg)
 		e1:SetOperation(c11511043.drop)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
     end
 end

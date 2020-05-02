@@ -29,7 +29,7 @@ function c11511459.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectTarget(tp,c11511459.filterF,tp,LOCATION_MZONE,0,1,1,nil,e,tp,nil)
 	local tc1=g:GetFirst()
 	if Duel.IsExistingTarget(c11511459.filterF,tp,LOCATION_MZONE,0,1,tc1,e,tp,tc1) 
-		and not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.SelectYesNo(tp,aux.Stringid(11511459,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		g:Merge(Duel.SelectTarget(tp,c11511459.filterF,tp,LOCATION_MZONE,0,1,1,tc1,e,tp,tc1))

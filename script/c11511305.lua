@@ -49,16 +49,16 @@ function c11511305.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c11511305.filterP(c,tp)
-	return c:IsSetCard(0xffc) and c:IsType(TYPE_PENDULUM) and ( c:GetSequence()==6 or c:GetSequence()==7) and c:IsDestructable()
+	return c:IsSetCard(0xffc) and c:IsType(TYPE_PENDULUM) and c:IsDestructable()
 		and Duel.IsExistingMatchingCard(c11511305.filterD,tp,LOCATION_DECK,0,1,nil,c:GetLevel())
 end
 function c11511305.filterD(c,lv)
 	return c:IsSetCard(0xffc) and c:IsType(TYPE_PENDULUM) and c:GetLevel()==lv
 end
 function c11511305.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c11511305.filterP,tp,LOCATION_SZONE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c11511305.filterP,tp,LOCATION_PZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,c11511305.filterP,tp,LOCATION_SZONE,0,1,1,nil,tp)
+	local g1=Duel.SelectTarget(tp,c11511305.filterP,tp,LOCATION_PZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,g1:GetCount(),0,0)
 end
 function c11511305.op1(e,tp,eg,ep,ev,re,r,rp)
@@ -66,11 +66,7 @@ function c11511305.op1(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.Destroy(tc,REASON_EFFECT) then
 		local g2=Duel.SelectMatchingCard(tp,c11511305.filterD,tp,LOCATION_DECK,0,1,1,nil,tc:GetLevel())
 		if g2:GetCount()>0 then
-		    if Duel.CheckLocation(tp,LOCATION_SZONE,6) then
-		    	Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,6)
-		    else
-		    	Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,7)
-		    end
+		    Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		end
 	end
 end
@@ -92,20 +88,20 @@ function c11511305.op2(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+0x1fe0000)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
 		
