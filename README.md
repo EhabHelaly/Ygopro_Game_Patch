@@ -1,12 +1,11 @@
 # Ygopro_Game_Patch
-Cards lua scripts and texts. 
 
-1- Paste all lua files in the game directory Scripts folder
+1- merge script and expansions folder with their correspondent folders in game directory 
 
-2- open Cards.cdb in the patch directory and cards.cdb in the game directory with SQLite 
+2- add the content of setname.txt and strings.conf files to their correspondent files in game directory  
 
-3- merge all records in "Text" and "Data" tables in Cards.cdb with those in cards.cdb
+3- download pics.7z from this [link](https://drive.google.com/open?id=1tU-RjMRmD78ZRlCV1bcrW5rbnQr0vERr)
+
+4- extract pics.7z and merge the extracted folder with its correspondent folder in game directory
 
 Patch Complete!!
-
-Note: For card textures; simply request them through https://github.com/EhabHelaly

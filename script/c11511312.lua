@@ -1,0 +1,116 @@
+-- Kairem Sigma
+function c11511312.initial_effect(c)
+	--pendulum summon
+	aux.EnablePendulumAttribute(c)
+	--xyz summon
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffc),4,2)
+	c:EnableReviveLimit()
+
+	-- Change Scale (Normal Summon)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(c11511312.conSP)
+	e1:SetCost(c11511312.cost1)
+	e1:SetOperation(c11511312.op1)
+	e1:SetCountLimit(1)
+	e1:SetLabel(SUMMON_TYPE_XYZ)
+	c:RegisterEffect(e1)
+	-- Inflict (Pendulum Summon)
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(c11511312.conSP)
+	e2:SetTarget(c11511312.tg2)
+	e2:SetOperation(c11511312.op2)
+	e2:SetLabel(SUMMON_TYPE_PENDULUM)
+	c:RegisterEffect(e2)
+	-- draw (Pendulum effect)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CARD_TARGET)
+	e3:SetRange(LOCATION_PZONE)
+	e3:SetCountLimit(1)
+	e3:SetTarget(c11511312.tg3)
+	e3:SetOperation(c11511312.op3)
+	c:RegisterEffect(e3)
+	-- Pendulum Summon Counter 
+	if not c11511312.global_check then
+		c11511312.global_check=true
+		c11511312[0]=0
+		c11511312[1]=0
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		ge1:SetOperation(c11511312.checkop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge2:SetOperation(c11511312.clearop)
+		Duel.RegisterEffect(ge2,0)
+	end
+end
+c11511312.pendulum_level=8
+function c11511312.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	while tc do
+		if bit.band(tc:GetSummonType(),SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM  and tc:IsSetCard(0xffc) then
+			local p=tc:GetSummonPlayer()
+			c11511312[p]=c11511312[p]+1
+		end
+		tc=eg:GetNext()
+	end
+end
+function c11511312.clearop(e,tp,eg,ep,ev,re,r,rp)
+	c11511312[0]=0
+	c11511312[1]=0
+end
+
+function c11511312.conSP(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetSummonType()==e:GetLabel()
+end
+function c11511312.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+end
+function c11511312.op1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	--direct attack
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DIRECT_ATTACK)
+	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
+end
+
+function c11511312.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(400*c11511312[tp])
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,400*c11511312[tp])
+end
+function c11511312.op2(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Damage(p,d,REASON_EFFECT)
+end
+function c11511312.filter3(c)
+	return c:IsSetCard(0xffc) and c:IsDestructable()
+end
+function c11511312.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(c11511312.filter3,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,0,1,0,0)
+end
+function c11511312.op3(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,c11511312.filter3,tp,LOCATION_MZONE,0,1,1,nil) 
+	if g:GetCount() and Duel.Destroy(g,REASON_EFFECT) then 
+		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+		Duel.Draw(p,d,REASON_EFFECT)
+	end
+end
