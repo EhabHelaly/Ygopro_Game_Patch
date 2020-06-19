@@ -1,5 +1,6 @@
 -- Kairem Dragon Claw
-function c11511315.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xffc))
 	--Atk up
 	local e1=Effect.CreateEffect(c)
@@ -14,14 +15,14 @@ function c11511315.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
-	e2:SetCondition(c11511315.accon)
-	e2:SetValue(c11511315.aclimit)
+	e2:SetCondition(s.accon)
+	e2:SetValue(s.aclimit)
 	c:RegisterEffect(e2)
 
 end
-function c11511315.accon(e)
+function s.accon(e)
 	return Duel.GetAttacker()==e:GetHandler():GetEquipTarget() or Duel.GetAttackTarget()==e:GetHandler():GetEquipTarget()
 end
-function c11511315.aclimit(e,re,tp)
+function s.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)
 end

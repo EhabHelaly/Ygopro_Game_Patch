@@ -1,10 +1,11 @@
 --Dragonilian Astria
-function c11511225.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--counter permit
 	c:EnableCounterPermit(0xffd)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(c11511225.filterFusion,ATTRIBUTE_WIND),aux.FilterBoolFunction(c11511225.filterFusion,ATTRIBUTE_EARTH),false)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunction(s.filterFusion,ATTRIBUTE_WIND),aux.FilterBoolFunction(s.filterFusion,ATTRIBUTE_EARTH))
 	--Attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -17,8 +18,8 @@ function c11511225.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetTarget(c11511225.addctg)
-	e2:SetOperation(c11511225.addcop)
+	e2:SetTarget(s.addctg)
+	e2:SetOperation(s.addcop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
@@ -29,9 +30,9 @@ function c11511225.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(c11511225.cost)
-	e4:SetTarget(c11511225.target)
-	e4:SetOperation(c11511225.activate)
+	e4:SetCost(s.cost)
+	e4:SetTarget(s.target)
+	e4:SetOperation(s.activate)
 	c:RegisterEffect(e4)
 	--Destroy replace
 	local e5=Effect.CreateEffect(c)
@@ -39,55 +40,55 @@ function c11511225.initial_effect(c)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetTarget(c11511225.desreptg)
-	e5:SetOperation(c11511225.desrepop)
+	e5:SetTarget(s.desreptg)
+	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
 
 end
-function c11511225.filterFusion(c,att)
+function s.filterFusion(c,att)
 	return c:IsSetCard(0xffd) and c:IsAttribute(att)
 end
-function c11511225.filterAtt(c,att)
+function s.filterAtt(c,att)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
 end
-function c11511225.getAttributesNumber(tp)
-	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DEVINE}
+function s.getAttributesNumber(tp)
+	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DIVINE}
 	local count=0
 	local att
 	for att=1,7 do
-		if Duel.IsExistingMatchingCard(c11511225.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
+		if Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
 	end
 	return count
 end
-function c11511225.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,c11511225.getAttributesNumber(tp),0,0xffd)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,s.getAttributesNumber(tp),0,0xffd)
 end
-function c11511225.addcop(e,tp,eg,ep,ev,re,r,rp)
+function s.addcop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0xffd,c11511225.getAttributesNumber(tp))
+		e:GetHandler():AddCounter(0xffd,s.getAttributesNumber(tp))
 	end
 end
-function c11511225.filter(c)
+function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
-function c11511225.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_COST) end
 	e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_COST)
 end
-function c11511225.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11511225.filter,tp,0,LOCATION_ONFIELD,1,nil) end
-	local sg=Duel.GetMatchingGroup(c11511225.filter,tp,0,LOCATION_ONFIELD,nil)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
+	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,sg:GetCount(),0,0)
 end
-function c11511225.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c11511225.filter,tp,0,LOCATION_ONFIELD,nil)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end
-function c11511225.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_EFFECT+REASON_REPLACE) end
-	return Duel.SelectYesNo(tp,aux.Stringid(11511225,0))
+	return Duel.SelectYesNo(tp,aux.Stringid(id,0))
 end
-function c11511225.desrepop(e,tp,eg,ep,ev,re,r,rp)
+function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_EFFECT+REASON_REPLACE)
 end

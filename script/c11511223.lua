@@ -1,7 +1,8 @@
 --Dragonilian Rashenrine
-function c11511223.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--counter permit
 	c:EnableCounterPermit(0xffd)
 	--spsummon proc
@@ -10,15 +11,15 @@ function c11511223.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(c11511223.hspcon)
-	e1:SetOperation(c11511223.hspop)
+	e1:SetCondition(s.hspcon)
+	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
 	-- add counters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetTarget(c11511223.addctg)
-	e2:SetOperation(c11511223.addcop)
+	e2:SetTarget(s.addctg)
+	e2:SetOperation(s.addcop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
@@ -34,9 +35,9 @@ function c11511223.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetCountLimit(1)
-	e5:SetCondition(c11511223.discon)
-	e5:SetTarget(c11511223.distg)
-	e5:SetOperation(c11511223.disop)
+	e5:SetCondition(s.discon)
+	e5:SetTarget(s.distg)
+	e5:SetOperation(s.disop)
 	c:RegisterEffect(e5)
 	-- halve atack
 	local e6=Effect.CreateEffect(c)
@@ -45,9 +46,9 @@ function c11511223.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1)
-	e6:SetCost(c11511223.cost)
-	e6:SetTarget(c11511223.atktg)
-	e6:SetOperation(c11511223.atkop)
+	e6:SetCost(s.cost)
+	e6:SetTarget(s.atktg)
+	e6:SetOperation(s.atkop)
 	c:RegisterEffect(e6)
 	--lv change
 	local e7=Effect.CreateEffect(c)
@@ -58,22 +59,22 @@ function c11511223.initial_effect(c)
 	e7:SetHintTiming(TIMING_SUMMON+TIMING_SPSUMMON+TIMING_FLIPSUMMON)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
-	e7:SetCost(c11511223.cost)
-	e7:SetTarget(c11511223.target)
-	e7:SetOperation(c11511223.operation)
+	e7:SetCost(s.cost)
+	e7:SetTarget(s.target)
+	e7:SetOperation(s.operation)
 	c:RegisterEffect(e7)
 end
-function c11511223.filter(c)
+function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>1
 end
-function c11511223.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return Duel.GetTurnPlayer()~=tp and chkc:GetControler()~=tp and chkc:IsLocation(LOCATION_MZONE) and c11511223.filter(chkc) end
-	if chk==0 then return Duel.GetTurnPlayer()~=tp and Duel.IsExistingTarget(c11511223.filter,tp,0,LOCATION_MZONE,1,nil) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return Duel.GetTurnPlayer()~=tp and chkc:GetControler()~=tp and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
+	if chk==0 then return Duel.GetTurnPlayer()~=tp and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c11511223.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
 end
-function c11511223.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
@@ -85,13 +86,13 @@ function c11511223.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c11511223.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler()~=tp and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
-function c11511223.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -102,57 +103,57 @@ function c11511223.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function c11511223.discon(e,tp,eg,ep,ev,re,r,rp)
-	return c11511223.getAttributesNumber(tp)>=2 and Duel.IsChainNegatable(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and  ep~=tp
+function s.discon(e,tp,eg,ep,ev,re,r,rp)
+	return s.getAttributesNumber(tp)>=2 and Duel.IsChainNegatable(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and  ep~=tp
 end
-function c11511223.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
-function c11511223.disop(e,tp,eg,ep,ev,re,r,rp)
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-function c11511223.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_COST) end
 	e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_COST)
 end
-function c11511223.spfilter(c)
+function s.spfilter(c)
 	return c:IsSetCard(0xffd) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
-function c11511223.hspcon(e,c)
+function s.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(c:GetControler(),c11511223.spfilter,1,nil)
+		and Duel.CheckReleaseGroup(c:GetControler(),s.spfilter,1,nil)
 end
-function c11511223.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c11511223.spfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
-function c11511223.filterAtt(c,att)
+function s.filterAtt(c,att)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
 end
-function c11511223.getAttributesNumber(tp)
-	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DEVINE}
+function s.getAttributesNumber(tp)
+	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DIVINE}
 	local count=0
 	local att
 	for att=1,7 do
-		if Duel.IsExistingMatchingCard(c11511223.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
+		if Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
 	end
 	return count
 end
-function c11511223.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,c11511223.getAttributesNumber(tp),0,0xffd)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,s.getAttributesNumber(tp),0,0xffd)
 end
-function c11511223.addcop(e,tp,eg,ep,ev,re,r,rp)
+function s.addcop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0xffd,c11511223.getAttributesNumber(tp))
+		e:GetHandler():AddCounter(0xffd,s.getAttributesNumber(tp))
 	end
 end

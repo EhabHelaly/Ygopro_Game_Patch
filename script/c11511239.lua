@@ -1,5 +1,6 @@
 --Dragonilian Heart
-function c11511239.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,24 +13,24 @@ function c11511239.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)	
-	e2:SetTarget(c11511239.target)
-	e2:SetOperation(c11511239.operation)
+	e2:SetTarget(s.target)
+	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)	
 end
-function c11511239.filter(c,e,tp,tc)
+function s.filter(c,e,tp,tc)
 	return c:IsSetCard(0xffd) and c:IsFaceup()
 end
-function c11511239.target(e,tp,eg,ep,ev,re,r,rp,chk)	
-	if chk==0 then return Duel.IsExistingTarget(c11511239.filter,tp,LOCATION_MZONE,0,1,nil) end	
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)	
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end	
 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,c11511239.filter,tp,LOCATION_MZONE,0,1,1,nil)	
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)	
 	Duel.Hint(HINT_SELECTMSG,tp,562)
 	local rc=Duel.AnnounceAttribute(tp,1,0xffff-g:GetFirst():GetAttribute())
 	e:SetLabel(rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 end
-function c11511239.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -1,13 +1,14 @@
 --Dragonilian Vryus
-function c11511202.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	-- Change Attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetTarget(c11511202.target)
-	e1:SetOperation(c11511202.operation)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)	
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -20,20 +21,20 @@ function c11511202.initial_effect(c)
 	c:RegisterEffect(e4)
 
 end
-function c11511202.filter(c,e,tp,tc)
+function s.filter(c,e,tp,tc)
 	return c:IsSetCard(0xffd) and c:IsFaceup()
 end
-function c11511202.target(e,tp,eg,ep,ev,re,r,rp,chk)	
-	if chk==0 then return Duel.IsExistingTarget(c11511202.filter,tp,LOCATION_MZONE,0,1,nil) end	
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)	
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end	
 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c11511202.filter,tp,LOCATION_MZONE,0,1,1,nil)	
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)	
 	Duel.Hint(HINT_SELECTMSG,tp,562)
 	local rc=Duel.AnnounceAttribute(tp,1,0xffff-g:GetFirst():GetAttribute())
 	e:SetLabel(rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 end
-function c11511202.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

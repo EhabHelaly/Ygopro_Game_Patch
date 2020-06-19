@@ -1,7 +1,8 @@
 --Dragonilian Rhaega
-function c11511222.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--counter permit
 	c:EnableCounterPermit(0xffd)
 	--spsummon proc
@@ -10,15 +11,15 @@ function c11511222.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(c11511222.hspcon)
-	e1:SetOperation(c11511222.hspop)
+	e1:SetCondition(s.hspcon)
+	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
 	-- add counters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetTarget(c11511222.addctg)
-	e2:SetOperation(c11511222.addcop)
+	e2:SetTarget(s.addctg)
+	e2:SetOperation(s.addcop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
@@ -32,8 +33,8 @@ function c11511222.initial_effect(c)
 	e5:SetCode(EFFECT_UPDATE_ATTACK)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetTargetRange(0,LOCATION_MZONE)
-	e5:SetTarget(c11511222.tg)
-	e5:SetValue(c11511222.val)
+	e5:SetTarget(s.tg)
+	e5:SetValue(s.val)
 	c:RegisterEffect(e5)
 	--damage amp
 	local e6=Effect.CreateEffect(c)
@@ -41,8 +42,8 @@ function c11511222.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1)
-	e6:SetCost(c11511222.cost)
-	e6:SetOperation(c11511222.dmgoperation)
+	e6:SetCost(s.cost)
+	e6:SetOperation(s.dmgoperation)
 	c:RegisterEffect(e6)
 	--inflict damage
 	local e7=Effect.CreateEffect(c)
@@ -52,82 +53,82 @@ function c11511222.initial_effect(c)
 	e7:SetCode(EVENT_FREE_CHAIN)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
-	e7:SetCost(c11511222.cost)
-	e7:SetTarget(c11511222.damtg)
-	e7:SetOperation(c11511222.damop)
+	e7:SetCost(s.cost)
+	e7:SetTarget(s.damtg)
+	e7:SetOperation(s.damop)
 	c:RegisterEffect(e7)
 end
-function c11511222.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetTurnPlayer()~=tp end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(c11511222.getAttributesNumber(tp)*500)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,c11511222.getAttributesNumber(tp)*500)
+	Duel.SetTargetParam(s.getAttributesNumber(tp)*500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,s.getAttributesNumber(tp)*500)
 end
-function c11511222.damop(e,tp,eg,ep,ev,re,r,rp)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.Damage(p,c11511222.getAttributesNumber(tp)*500,REASON_EFFECT)
+	Duel.Damage(p,s.getAttributesNumber(tp)*500,REASON_EFFECT)
 end
-function c11511222.dmgoperation(e,tp,eg,ep,ev,re,r,rp)
+function s.dmgoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler()
 	if tc:IsFaceup() then
 		local e1=Effect.CreateEffect(tc)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e1:SetOperation(c11511222.dop)
+		e1:SetOperation(s.dop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		end
 end
-function c11511222.dcon(e,tp,eg,ep,ev,re,r,rp)
+function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ep~=tp and Duel.GetAttackTarget()==c
 end
-function c11511222.dop(e,tp,eg,ep,ev,re,r,rp)
+function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)
 end
 
-function c11511222.tg(e,c)
+function s.tg(e,c)
 	return c:IsFaceup()
 end
-function c11511222.val(e,c)
-	return c11511222.getAttributesNumber(e:GetHandlerPlayer())*-200
+function s.val(e,c)
+	return s.getAttributesNumber(e:GetHandlerPlayer())*-200
 end
 
-function c11511222.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_COST) end
 	e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_COST)
 end
-function c11511222.spfilter(c)
+function s.spfilter(c)
 	return c:IsSetCard(0xffd) and c:IsAttribute(ATTRIBUTE_FIRE)
 end
-function c11511222.hspcon(e,c)
+function s.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(c:GetControler(),c11511222.spfilter,1,nil)
+		and Duel.CheckReleaseGroup(c:GetControler(),s.spfilter,1,nil)
 end
-function c11511222.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,c11511222.spfilter,1,1,nil)
+	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
-function c11511222.filterAtt(c,att)
+function s.filterAtt(c,att)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
 end
-function c11511222.getAttributesNumber(tp)
-	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DEVINE}
+function s.getAttributesNumber(tp)
+	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DIVINE}
 	local count=0
 	local att
 	for att=1,7 do
-		if Duel.IsExistingMatchingCard(c11511222.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
+		if Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
 	end
 	return count
 end
-function c11511222.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,c11511222.getAttributesNumber(tp),0,0xffd)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,s.getAttributesNumber(tp),0,0xffd)
 end
-function c11511222.addcop(e,tp,eg,ep,ev,re,r,rp)
+function s.addcop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0xffd,c11511222.getAttributesNumber(tp))
+		e:GetHandler():AddCounter(0xffd,s.getAttributesNumber(tp))
 	end
 end

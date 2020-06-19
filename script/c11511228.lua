@@ -1,5 +1,6 @@
 --Dragonilian Qasysde
-function c11511228.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--counter permit
 	c:EnableCounterPermit(0xffd)
@@ -8,8 +9,8 @@ function c11511228.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_FUSION_MATERIAL)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCondition(c11511228.fscon)
-	e0:SetOperation(c11511228.fsop)
+	e0:SetCondition(s.fscon)
+	e0:SetOperation(s.fsop)
 	c:RegisterEffect(e0)
 	--Attribute
 	local e1=Effect.CreateEffect(c)
@@ -23,8 +24,8 @@ function c11511228.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetTarget(c11511228.addctg)
-	e2:SetOperation(c11511228.addcop)
+	e2:SetTarget(s.addctg)
+	e2:SetOperation(s.addcop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
@@ -36,43 +37,44 @@ function c11511228.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
-	e4:SetCondition(c11511228.conrem)
-	e4:SetOperation(c11511228.oprem)
+	e4:SetCondition(s.conrem)
+	e4:SetOperation(s.oprem)
 	c:RegisterEffect(e4)
 	-- Immune
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_IMMUNE_EFFECT)
-	e5:SetValue(c11511228.efilter)
-	e5:SetCondition(c11511228.conrem)
+	e5:SetValue(s.efilter)
+	e5:SetCondition(s.conrem)
 	c:RegisterEffect(e5)
 
 end
-function c11511228.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,6,0,0xffd)
+function s.FConditionCheckF(c,chkf)
+	return c:IsOnField() and c:IsControler(chkf)
 end
-function c11511228.addcop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0xffd,6)
-	end
-end
-function c11511228.fscon(e,g,gc,chkf)
+function s.fscon(e,g,gc,chkf)
 	if g==nil then return true end
 	local mg=g:Filter(Card.IsSetCard,nil,0xffd)
 	mg=mg:Filter(Card.IsType,nil,TYPE_MONSTER)
 
 	local fs=false
-	if mg:IsExists(aux.FConditionCheckF,1,nil,chkf) then fs=true end
+	if Duel.GetLocationCount(chkf,LOCATION_MZONE) == 0 then
+		fs = mg:IsExists(s.FConditionCheckF,1,nil,chkf)
+	else fs = true end
 	return mg:GetClassCount(Card.GetAttribute)>=6 and (fs or chkf==PLAYER_NONE)
 end
-function c11511228.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
+function s.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
+	if not s.fscon(e,eg,gc,chkf) then return end
 	local sg=eg:Filter(Card.IsSetCard,nil,0xffd)
 	sg=sg:Filter(Card.IsType,nil,TYPE_MONSTER)
 	local g1=nil
+
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	if chkf~=PLAYER_NONE then g1=sg:FilterSelect(tp,aux.FConditionCheckF,1,1,nil,chkf)
-	else g1=sg:Select(tp,1,1,nil) end
+	if chkf~=PLAYER_NONE and Duel.GetLocationCount(chkf,LOCATION_MZONE) == 0 then
+		g1=sg:FilterSelect(tp,s.FConditionCheckF,1,1,nil,chkf)
+	else
+		g1=sg:Select(tp,1,1,nil)
+	end
 	sg:Remove(Card.IsAttribute,nil,g1:GetFirst():GetAttribute())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 	local g2=sg:Select(tp,1,1,nil)
@@ -95,12 +97,21 @@ function c11511228.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 	g1:Merge(g6)
 	Duel.SetFusionMaterial(g1)
 end
-function c11511228.efilter(e,re)
+function s.addctg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,6,0,0xffd)
+end
+function s.addcop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetHandler():IsRelateToEffect(e) then
+		e:GetHandler():AddCounter(0xffd,6)
+	end
+end
+function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
-function c11511228.conrem(e,tp,eg,ep,ev,re,r,rp)
+function s.conrem(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0xffd)>0
 end
-function c11511228.oprem(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
+function s.oprem(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 	e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_COST+REASON_EFFECT)
 end

@@ -1,11 +1,12 @@
 --Vortex Gusto
-function c11511519.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--change
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetOperation(c11511519.chop)
+	e1:SetOperation(s.chop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -17,14 +18,14 @@ function c11511519.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_BE_MATERIAL)
-    e4:SetCondition(c11511519.mcon)
-	e4:SetOperation(c11511519.mop)
+    e4:SetCondition(s.mcon)
+	e4:SetOperation(s.mop)
 	c:RegisterEffect(e4)
 end
-function c11511519.chop(e,tp,eg,ep,ev,re,r,rp)
+function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		if Duel.SelectOption(tp,aux.Stringid(11511519,1),aux.Stringid(11511519,2))==0 then
+		if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
 			--Race
 			Duel.Hint(HINT_SELECTMSG,tp,563)
 			local race=Duel.AnnounceRace(tp,1,0xffffff - c:GetRace())
@@ -49,22 +50,22 @@ function c11511519.chop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c11511519.mcon(e,tp,eg,ep,ev,re,r,rp)
+function s.mcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_FUSION and e:GetHandler():GetReasonCard():IsSetCard(0xffa)
 end
-function c11511519.mop(e,tp,eg,ep,ev,re,r,rp)
+function s.mop(e,tp,eg,ep,ev,re,r,rp)
 	--Banish
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(11511519,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetTarget(c11511519.ftg)
-	e1:SetOperation(c11511519.fop)
+	e1:SetTarget(s.ftg)
+	e1:SetOperation(s.fop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
@@ -76,11 +77,11 @@ function c11511519.mop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e2,true)
 	end
 end
-function c11511519.ftg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.ftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,1-tp,1)
 end
-function c11511519.fop(e,tp,eg,ep,ev,re,r,rp)
+function s.fop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

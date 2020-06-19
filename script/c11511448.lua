@@ -1,5 +1,6 @@
 --Mastery And Vision
-function c11511448.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xffb))
 	--Atk
 	local e1=Effect.CreateEffect(c)
@@ -9,69 +10,69 @@ function c11511448.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(11511448,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetTarget(c11511448.tgE)
-	e2:SetOperation(c11511448.opE)
+	e2:SetTarget(s.tgE)
+	e2:SetOperation(s.opE)
 	c:RegisterEffect(e2)
 	--add to hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(11511448,1))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(c11511448.costH)
-	e3:SetTarget(c11511448.tgH)
-	e3:SetOperation(c11511448.opH)
+	e3:SetCost(s.costH)
+	e3:SetTarget(s.tgH)
+	e3:SetOperation(s.opH)
 	c:RegisterEffect(e3)
 	--chain attack
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(11511448,2))
+	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
-	e4:SetCondition(c11511448.atcon)
-	e4:SetOperation(c11511448.atop)
+	e4:SetCondition(s.atcon)
+	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
 end
-function c11511448.filter(c,ec)
+function s.filter(c,ec)
 	return c:IsCode(11511407) and c:IsFaceup() and ec:CheckEquipTarget(c)
 end
-function c11511448.tgE(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.tgE(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c11511448.filter,tp,LOCATION_MZONE,0,1,nil,e:GetHandler()) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
-function c11511448.opE(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c11511448.filter,tp,LOCATION_MZONE,0,nil,e:GetHandler())
+function s.opE(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,e:GetHandler())
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
 end
-function c11511448.filterH(c)
+function s.filterH(c)
 	return c:IsCode(11511407) and c:IsAbleToHand()
 end
-function c11511448.costH(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.costH(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-function c11511448.tgH(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.tgH(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingMatchingCard(c11511448.filterH,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SEARCH+CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c11511448.opH(e,tp,eg,ep,ev,re,r,rp)
+function s.opH(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c11511448.filterH,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c11511448.atcon(e,tp,eg,ep,ev,re,r,rp)
+function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
@@ -79,7 +80,7 @@ function c11511448.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return ec:IsControler(tp) and c:GetEquipTarget()==ec and bc and bc:IsType(TYPE_MONSTER) 
 		and ec:IsChainAttackable(2,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
-function c11511448.atop(e,tp,eg,ep,ev,re,r,rp)
+function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.ChainAttack()
 end

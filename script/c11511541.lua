@@ -1,5 +1,6 @@
 --Vortex Diversion
-function c11511541.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,8 +12,8 @@ function c11511541.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1)
-	e1:SetTarget(c11511541.atg)
-	e1:SetOperation(c11511541.aop)
+	e1:SetTarget(s.atg)
+	e1:SetOperation(s.aop)
 	c:RegisterEffect(e1)
 	--Change Race
 	local e2=Effect.CreateEffect(c)
@@ -21,20 +22,20 @@ function c11511541.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c11511541.rcon)
-	e2:SetTarget(c11511541.rtg)
-	e2:SetOperation(c11511541.rop)
+	e2:SetCondition(s.rcon)
+	e2:SetTarget(s.rtg)
+	e2:SetOperation(s.rop)
 	c:RegisterEffect(e2)
 end
-function c11511541.filter(c,race)
+function s.filter(c,race)
 	return c:IsFaceup() and c:IsSetCard(0xffa)
 end
-function c11511541.atg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(c11511541.filter,tp,LOCATION_MZONE,0,1,nil) end
+function s.atg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c11511541.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-function c11511541.aop(e,tp,eg,ep,ev,re,r,rp)
+function s.aop(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,562)
@@ -48,15 +49,15 @@ function c11511541.aop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c11511541.rcon(e,tp,eg,ep,ev,re,r,rp)
+function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-function c11511541.rtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.rtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
-function c11511541.rop(e,tp,eg,ep,ev,re,r,rp)
+function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,563)

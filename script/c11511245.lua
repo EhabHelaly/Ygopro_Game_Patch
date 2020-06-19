@@ -1,12 +1,13 @@
 --Dragonilian Eradication
-function c11511245.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(c11511245.target)
-	e1:SetOperation(c11511245.activate)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Destroy
 	local e2=Effect.CreateEffect(c)
@@ -14,31 +15,31 @@ function c11511245.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCondition(c11511245.con)
-	e2:SetCost(c11511245.cost)
-	e2:SetTarget(c11511245.target2)
-	e2:SetOperation(c11511245.activate2)
+	e2:SetCondition(s.con)
+	e2:SetCost(s.cost)
+	e2:SetTarget(s.target2)
+	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-function c11511245.filter1(c,e,tp)
+function s.filter1(c,e,tp)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c11511245.filter2(c)
+function s.filter2(c)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
-function c11511245.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-					and Duel.IsExistingTarget(c11511245.filter1,tp,LOCATION_PZONE,0,1,nil,e,tp)
-					and Duel.IsExistingTarget(c11511245.filter2,tp,LOCATION_MZONE,0,1,nil) end
+					and Duel.IsExistingTarget(s.filter1,tp,LOCATION_PZONE,0,1,nil,e,tp)
+					and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil) end
 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,c11511245.filter1,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
+	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g2=Duel.SelectTarget(tp,c11511245.filter2,tp,LOCATION_MZONE,0,1,1,nil)
+	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil)
     e:SetLabelObject(g1:GetFirst())
 end
-function c11511245.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc2=g:GetFirst()
@@ -48,54 +49,54 @@ function c11511245.activate(e,tp,eg,ep,ev,re,r,rp)
 	    Duel.MoveToField(tc2,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
-function c11511245.filterAtt(c,att)
+function s.filterAtt(c,att)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
 end
-function c11511245.getAttributesNumber(tp)
-	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DEVINE}
+function s.getAttributesNumber(tp)
+	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DIVINE}
 	local count=0
 	local att
 	for att=1,7 do
-		if Duel.IsExistingMatchingCard(c11511245.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
+		if Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
 	end
 	return count
 end
 ---------------------------------------------------
-function c11511245.con(e,tp,eg,ep,ev,re,r,rp)
+function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and (e:GetHandler():GetTurnID()~=Duel.GetTurnCount() or e:GetHandler():IsReason(REASON_RETURN))
-		and c11511245.getAttributesNumber(tp)>=6
+		and s.getAttributesNumber(tp)>=6
 end
-function c11511245.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-function c11511245.cfilter(c,att)
+function s.cfilter(c,att)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
 end
-function c11511245.dfilter1(c)
+function s.dfilter1(c)
 	return c:IsDestructable() and c:IsFaceup()
 end
-function c11511245.dfilter2(c)
+function s.dfilter2(c)
 	return c:IsDestructable() and c:IsFacedown()
 end
-function c11511245.target2(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return
-		   Duel.IsExistingMatchingCard(c11511245.dfilter1,tp,0,LOCATION_ONFIELD,1,nil)
-		or Duel.IsExistingMatchingCard(c11511245.dfilter2,tp,0,LOCATION_ONFIELD,1,nil)
+		   Duel.IsExistingMatchingCard(s.dfilter1,tp,0,LOCATION_ONFIELD,1,nil)
+		or Duel.IsExistingMatchingCard(s.dfilter2,tp,0,LOCATION_ONFIELD,1,nil)
 		or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
 		or Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>0
 	end
 end
-function c11511245.activate2(e,tp,eg,ep,ev,re,r,rp)
+function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local off=1
 	local ops={}
 	local opval={}
-	if Duel.IsExistingMatchingCard(c11511245.dfilter1,tp,0,LOCATION_MZONE,1,nil) then
+	if Duel.IsExistingMatchingCard(s.dfilter1,tp,0,LOCATION_MZONE,1,nil) then
 		ops[off]=aux.Stringid(11511247,0)
 		opval[off-1]=1
 		off=off+1
 	end
-	if Duel.IsExistingMatchingCard(c11511245.dfilter2,tp,0,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingMatchingCard(s.dfilter2,tp,0,LOCATION_ONFIELD,1,nil) then
 		ops[off]=aux.Stringid(11511247,1)
 		opval[off-1]=2
 		off=off+1
@@ -113,10 +114,10 @@ function c11511245.activate2(e,tp,eg,ep,ev,re,r,rp)
 	if off==1 then return end
 	local op=Duel.SelectOption(tp,table.unpack(ops))
 	if opval[op]==1 then
-		local g=Duel.GetMatchingGroup(c11511245.dfilter1,tp,0,LOCATION_ONFIELD,nil)
+		local g=Duel.GetMatchingGroup(s.dfilter1,tp,0,LOCATION_ONFIELD,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif opval[op]==2 then
-		local g=Duel.GetMatchingGroup(c11511245.dfilter2,tp,0,LOCATION_ONFIELD,nil)
+		local g=Duel.GetMatchingGroup(s.dfilter2,tp,0,LOCATION_ONFIELD,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif opval[op]==3 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)

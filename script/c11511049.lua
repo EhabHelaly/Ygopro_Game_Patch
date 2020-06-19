@@ -1,19 +1,20 @@
 --Warrior's Fury
-function c11511049.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
- 	e1:SetCondition(c11511049.con)
-	e1:SetOperation(c11511049.op)
+ 	e1:SetCondition(s.con)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 
 end
-function c11511049.con(e,tp,eg,ep,ev,re,r,rp)
+function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0xfff) and not at:IsStatus(STATUS_BATTLE_DESTROYED)
 end
-function c11511049.op(e,tp,eg,ep,ev,re,r,rp)
+function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
         --pierce
         local e1=Effect.CreateEffect(at)

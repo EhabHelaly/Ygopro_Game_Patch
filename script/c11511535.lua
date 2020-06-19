@@ -1,5 +1,6 @@
 --Vortex Field
-function c11511535.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -14,9 +15,9 @@ function c11511535.initial_effect(c)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetCountLimit(1)
 	e1:SetLabel(5)
-	e1:SetCondition(c11511535.con)
-	e1:SetTarget(c11511535.tg)
-	e1:SetOperation(c11511535.op)
+	e1:SetCondition(s.con)
+	e1:SetTarget(s.tg)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--cannot be target
 	local e2=Effect.CreateEffect(c)
@@ -25,9 +26,9 @@ function c11511535.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetLabel(10)
-	e2:SetCondition(c11511535.con)
+	e2:SetCondition(s.con)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c11511535.target)
+	e2:SetTarget(s.target)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 	--Destroy
@@ -38,43 +39,43 @@ function c11511535.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
 	e3:SetLabel(15)
-	e3:SetCondition(c11511535.con)
-	e3:SetTarget(c11511535.destg)
-	e3:SetOperation(c11511535.desop)
+	e3:SetCondition(s.con)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-function c11511535.filter(c)
+function s.filter(c)
 	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
-function c11511535.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(c11511535.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil):GetClassCount(Card.GetRace)>=e:GetLabel()
+function s.con(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil):GetClassCount(Card.GetRace)>=e:GetLabel()
 end
-function c11511535.filterF(c,tp)
+function s.filterF(c,tp)
 	return c:IsSetCard(0xffa) and c:GetSummonType()==SUMMON_TYPE_FUSION and c:IsControler(tp)
 end
-function c11511535.filter1(c,e)
+function s.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
-function c11511535.filter2(c,e,tp,fc,f,chkf)
+function s.filter2(c,e,tp,fc,f,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0xffa) and c:GetRace()~=fc:GetRace() and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(fc:GetMaterial(),nil,chkf)
 end
-function c11511535.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local fc=eg:Filter(c11511535.filterF,nil,tp):GetFirst()
+		local fc=eg:Filter(s.filterF,nil,tp):GetFirst()
 		if not fc then return false end
 		local mg1=fc:GetMaterial()
 		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
-		local res=Duel.IsExistingMatchingCard(c11511535.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,fc,nil,chkf)
+		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,fc,nil,chkf)
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function c11511535.op(e,tp,eg,ep,ev,re,r,rp)
-	local fc=eg:Filter(c11511535.filterF,nil,tp):GetFirst()
+function s.op(e,tp,eg,ep,ev,re,r,rp)
+	local fc=eg:Filter(s.filterF,nil,tp):GetFirst()
 	local mg1=fc:GetMaterial()
 	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
-	local sg1=Duel.GetMatchingGroup(c11511535.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,fc,nil,chkf)
+	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,fc,nil,chkf)
 	local mg2=nil
 	local sg2=nil
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -83,7 +84,7 @@ function c11511535.op(e,tp,eg,ep,ev,re,r,rp)
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)
 		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c11511535.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,fc,mf,chkf)
+		sg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,fc,mf,chkf)
 	end
 	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
 		local sg=sg1:Clone()
@@ -105,16 +106,16 @@ function c11511535.op(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c11511535.target(e,c)
+function s.target(e,c)
 	return c:IsSetCard(0xffa) and c:IsFaceup()
 end
-function c11511535.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),nil,LOCATION_ONFIELD)
 end
-function c11511535.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)

@@ -1,5 +1,6 @@
 --The SW Legendary Mount
-function c11511450.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xffb))
 	--Def
 	local e1=Effect.CreateEffect(c)

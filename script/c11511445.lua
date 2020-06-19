@@ -1,5 +1,6 @@
 --Castle Of The SW Clan
-function c11511445.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -20,8 +21,8 @@ function c11511445.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
-	e3:SetTarget(c11511445.tg1)
-	e3:SetOperation(c11511445.op1)
+	e3:SetTarget(s.tg1)
+	e3:SetOperation(s.op1)
 	e3:SetLabel(TYPE_MONSTER)
 	c:RegisterEffect(e3)
 	-- add to hand (spell/trap)
@@ -32,43 +33,43 @@ function c11511445.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetCountLimit(1)
-	e4:SetCondition(c11511445.con2)
-	e4:SetTarget(c11511445.tg2)
-	e4:SetOperation(c11511445.op2)
+	e4:SetCondition(s.con2)
+	e4:SetTarget(s.tg2)
+	e4:SetOperation(s.op2)
 	c:RegisterEffect(e4)
 
 end
-function c11511445.filter1(c)
+function s.filter1(c)
 	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:GetLevel()==4 
 end
-function c11511445.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11511445.filter1,tp,LOCATION_DECK,0,1,nil) end
+function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c11511445.op1(e,tp,eg,ep,ev,re,r,rp)
+function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c11511445.filter1,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c11511445.filterSP(c,tp)
+function s.filterSP(c,tp)
 	return c:GetSummonPlayer()==tp and c:IsSetCard(0xffb) and c:IsPreviousLocation(LOCATION_HAND)
 end
-function c11511445.con2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c11511445.filterSP,1,nil,tp)
+function s.con2(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.filterSP,1,nil,tp)
 end
-function c11511445.filter2(c)
+function s.filter2(c)
 	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
-function c11511445.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11511445.filter2,tp,LOCATION_DECK,0,1,nil) end
+function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function c11511445.op2(e,tp,eg,ep,ev,re,r,rp)
+function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c11511445.filter2,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

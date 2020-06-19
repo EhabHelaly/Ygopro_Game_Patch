@@ -1,6 +1,7 @@
 --Lost Memmories Of The Pharaoh
-function c11511603.initial_effect(c)
-	c:SetUniqueOnField(1,0,11511603)
+local s,id=GetID()
+function s.initial_effect(c)
+	c:SetUniqueOnField(1,0,id)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,30 +13,30 @@ function c11511603.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(c11511603.costRev)
-	e2:SetTarget(c11511603.targetT)
-	e2:SetOperation(c11511603.operationT)
+	e2:SetCost(s.costRev)
+	e2:SetTarget(s.targetT)
+	e2:SetOperation(s.operationT)
 	c:RegisterEffect(e2)
 end
-function c11511603.costRev(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.costRev(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_HAND,0,1,nil,ATTRIBUTE_DEVINE)
+		return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_HAND,0,1,nil,ATTRIBUTE_DIVINE)
 	end
 	local max=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_HAND,0,1,max,nil,ATTRIBUTE_DEVINE)
+	local g1=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_HAND,0,1,max,nil,ATTRIBUTE_DIVINE)
 	Duel.ConfirmCards(1-tp,g1)
 	Duel.ShuffleHand(tp)
 	e:SetLabel(g1:GetCount())
 end
-function c11511603.targetT(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.targetT(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,11511601,0,TYPE_TOKEN+TYPE_NORMAL+TYPE_NORMAL,0,3000,1,RACE_ROCK,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,e:GetLabel(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,e:GetLabel(),0,0)
 end
-function c11511603.operationT(e,tp,eg,ep,ev,re,r,rp)
+function s.operationT(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,11511601,0,TYPE_TOKEN+TYPE_NORMAL+TYPE_NORMAL,0,3000,1,RACE_ROCK,ATTRIBUTE_EARTH) then 
 		return
