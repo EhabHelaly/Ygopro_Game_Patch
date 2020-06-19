@@ -1,5 +1,6 @@
 # Ygopro_Game_Patch
 
+## Steps
 1- merge script and expansions folders with their correspondent folders in game directory 
 
 2- add the content of strings.conf file to its correspondent file in game directory  
