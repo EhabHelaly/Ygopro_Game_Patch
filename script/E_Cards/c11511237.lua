@@ -53,15 +53,17 @@ function s.filterxyzOV(c)
 	return c:IsSetCard(0xffd) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0 and not c:IsAttribute(ATTRIBUTE_DARK) 
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return true end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	if chk~=0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(s.splimit)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
+	return true
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return bit.band(sumtype,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 

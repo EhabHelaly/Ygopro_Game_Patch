@@ -77,7 +77,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ConfirmCards(tp,tc)
-		if c:IsCanRemoveCounter(tp,0xffd,1,REASON_COST) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if c:IsCanRemoveCounter(tp,0xffd,1,REASON_COST) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			c:RemoveCounter(tp,0xffd,1,REASON_COST)
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		end

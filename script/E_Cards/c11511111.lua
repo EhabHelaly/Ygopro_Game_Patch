@@ -54,7 +54,7 @@ function s.xyzfilter1(c,g)
 	return g:IsExists(s.xyzfilter2,2,c,c:GetLevel())
 end
 function s.xyzfilter2(c,lv)
-	return c:GetLevel()==lv
+	return c:GetLevel()==lv and lv~=0
 end
 function s.xyzcon(e,c,og)
 	if c==nil then return true end

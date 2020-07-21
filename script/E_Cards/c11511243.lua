@@ -15,14 +15,15 @@ function s.filterP(c)
 	return c:IsSetCard(0xffd) and c:IsType(TYPE_PENDULUM)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filterP,tp,LOCATION_SZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filterP,tp,LOCATION_PZONE,0,1,nil)
 				 and 	  Duel.IsExistingMatchingCard(s.filterP,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SEARCH+CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filterP,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		if Duel.GetLocationCount(tp,LOCATION_PZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) 
+		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) 
 		then
 		    Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		else

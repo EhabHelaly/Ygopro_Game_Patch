@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x20fe))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2ffe))
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)

@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 					and Duel.IsExistingTarget(s.filter1,tp,LOCATION_PZONE,0,1,nil,e,tp)
 					and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil) end
 
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil)
@@ -53,7 +53,7 @@ function s.filterAtt(c,att)
 	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
 end
 function s.getAttributesNumber(tp)
-	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE,ATTRIBUTE_DIVINE}
+	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE}
 	local count=0
 	local att
 	for att=1,7 do
@@ -64,7 +64,7 @@ end
 ---------------------------------------------------
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and (e:GetHandler():GetTurnID()~=Duel.GetTurnCount() or e:GetHandler():IsReason(REASON_RETURN))
-		and s.getAttributesNumber(tp)>=6
+		and s.getAttributesNumber(tp)==6
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

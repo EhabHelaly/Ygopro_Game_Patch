@@ -18,7 +18,7 @@ function s.initial_effect(c)
 
 end
 function s.filter(c)
-	return  c:IsSetCard(0xffd) and c:IsFaceup()
+	return c:IsSetCard(0xffd) and c:IsFaceup()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetOverlayCount()>0 end
@@ -29,6 +29,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(s.filter,1,nil)
 		and Duel.IsChainNegatable(ev)
+		and re:IsActiveType(TYPE_MONSTER)
+		and rp ~= tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -41,8 +43,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,11511247,0,0x4011,0,0,4,RACE_DRAGON,0xffff) 
-			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,11511247,0,TYPES_TOKEN,0,0,4,RACE_DRAGON,0xffff) 
+			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			local att=Duel.AnnounceAttribute(tp, 1, 0xffff) 
 			local token=Duel.CreateToken(tp,11511247)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
@@ -64,15 +66,17 @@ function s.filterxyzOV(c)
 	return c:IsSetCard(0xffd) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0 and not c:IsAttribute(ATTRIBUTE_WIND) 
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return true end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	if chk~=0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(s.splimit)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
+	return true
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return bit.band(sumtype,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 

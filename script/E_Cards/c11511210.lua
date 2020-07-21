@@ -11,6 +11,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 
 end
+function s.filterAtt(c,att)
+	return c:IsFaceup() and c:IsAttribute(att)
+end
 function s.filter(c)
-	return c:IsSetCard(0xffd) and not Duel.IsExistingMatchingCard(Card.IsAttribute, c:GetControler(), LOCATION_MZONE,0,1,nil,c:GetAttribute()) 
+	return c:IsSetCard(0xffd) and not Duel.IsExistingMatchingCard(s.filterAtt, c:GetControler(), LOCATION_MZONE,0,1,nil,c:GetAttribute()) 
 end

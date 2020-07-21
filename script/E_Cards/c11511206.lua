@@ -17,10 +17,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0xffd)
 end
+function s.filterAtt(c,att)
+	return c:IsFaceup() and c:IsAttribute(att)
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
-		and not Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_MZONE,0,1,nil,e:GetHandler():GetAttribute())
+		and not Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,e:GetHandler():GetAttribute())
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

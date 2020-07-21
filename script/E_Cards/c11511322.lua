@@ -39,7 +39,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.dfilter(c)
-	return c:IsSetCard(0xffc) and c:IsAbleToHand()
+	return c:IsSetCard(0xffc) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	return e:GetHandler():GetEquipTarget()
@@ -47,9 +47,9 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk ==0 then return Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,0xffc)
 						and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_DECK,0,1,nil) end
-	local tc=Duel.SelectTarget(tp,Card.IsSetCard,tp,LOCATION_PZONE,0,1,1,nil,0xffc)
-	local g=Group.FromCards(e:GetHandler(),tc)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),tp,0)
+	local g=Duel.SelectTarget(tp,Card.IsSetCard,tp,LOCATION_PZONE,0,1,1,nil,0xffc)
+	g:AddCard(e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND+CATEGORY_SEARCH,nil,1,tp,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -59,9 +59,9 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local g=Group.FromCards(e:GetHandler(),tc)
 		if Duel.Destroy(g,REASON_COST) then
 		    Duel.MoveToField(ec,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		    local g2=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_DECK,0,1,1,nil)
-		    if g2:GetCount() then
+		    if #g2 > 0 then
 		    	Duel.SendtoHand(g2,tp,REASON_EFFECT)
 		    end
 		end

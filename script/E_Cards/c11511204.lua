@@ -12,9 +12,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 
+function s.filterAtt(c,att)
+	return c:IsFaceup() and c:IsAttribute(att)
+end
 function s.filterH(c)
 	return c:IsSetCard(0xffd) and c:IsType(TYPE_MONSTER) and c:GetLevel()==4 and c:IsAbleToHand()
-	and not Duel.IsExistingMatchingCard(Card.IsAttribute,c:GetControler(),LOCATION_MZONE,0,1, nil,c:GetAttribute())
+	and not Duel.IsExistingMatchingCard(s.filterAtt,c:GetControler(),LOCATION_MZONE,0,1, nil,c:GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_GRAVE,0,1,nil) end

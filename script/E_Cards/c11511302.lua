@@ -36,12 +36,12 @@ function s.filterPC(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsPosition(POS_FACEUP)
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_PZONE)>0
+	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 		and Duel.IsExistingMatchingCard(s.filterPC,tp,LOCATION_EXTRA,0,1,nil) end
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_PZONE)<=0 then return end
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filterPC,tp,LOCATION_EXTRA,0,1,1,nil)
 	if g:GetCount()>0 then

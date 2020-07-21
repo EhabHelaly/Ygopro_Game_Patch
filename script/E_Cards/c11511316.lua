@@ -33,11 +33,11 @@ function s.filterD(c,loc)
 	end
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_PZONE)>0
+	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 		and Duel.IsExistingMatchingCard(s.filterD,tp,e:GetLabel(),0,1,nil,e:GetLabel()) end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_PZONE)<=0 then return end
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filterD,tp,e:GetLabel(),0,1,1,nil,e:GetLabel())
 	if g:GetCount()>0 then

@@ -13,9 +13,12 @@ end
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xffd)
 end
+function s.filterAtt(c,att)
+	return c:IsSetCard(0xffd) and c:IsFaceup() and c:IsAttribute(att)
+end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 
 	and Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
-	and not Duel.IsExistingMatchingCard(Card.IsAttribute,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttribute())
+	and not Duel.IsExistingMatchingCard(s.filterAtt,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end

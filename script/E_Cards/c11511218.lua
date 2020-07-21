@@ -17,9 +17,12 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+function s.filterAtt(c,att)
+	return c:IsFaceup() and c:IsAttribute(att)
+end
 function s.filterH(c,e,tp)
 	return c:IsSetCard(0xffd) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	and not Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
+	and not Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_HAND,0,1,nil,e,tp)

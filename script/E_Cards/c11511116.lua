@@ -14,12 +14,12 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_EXTRA,0,1,nil)
-	 and Duel.GetLocationCount(tp,LOCATION_PZONE)>0 end
+	 and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_PZONE)<=0 then return end
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
 	if not tc:IsRelateToEffect(e) then return end

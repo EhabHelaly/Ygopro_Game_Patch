@@ -47,12 +47,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local hc=e:GetLabelObject()
+	local oc=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
-	if tc==hc then tc=g:GetNext() end
-	if hc:IsFaceup() and hc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) and not hc:IsImmuneToEffect(e) then
-		Duel.Overlay(tc,hc)
+	if tc==oc then tc=g:GetNext() end
+	if oc:IsFaceup() and oc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) and not oc:IsImmuneToEffect(e) then
+		local og=oc:GetOverlayGroup()
+		if #og>0 then
+			Duel.SendtoGrave(og,REASON_RULE)
+		end
+		Duel.Overlay(tc,oc)
 	end
 end
 function s.ncost(e,tp,eg,ep,ev,re,r,rp,chk)

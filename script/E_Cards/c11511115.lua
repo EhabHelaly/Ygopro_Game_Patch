@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,tp)
-    Duel.SendtoGrave(g,nil,0,REASON_COST)
+    Duel.SendtoGrave(g,REASON_COST)
     e:SetLabelObject(g:GetFirst())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

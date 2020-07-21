@@ -19,11 +19,14 @@ end
 function s.filterM(c)
 	return c:IsSetCard(0xffd) and c:IsFaceup() 
 end
+function s.filterAtt(c,att)
+	return c:IsFaceup() and c:IsAttribute(att)
+end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainDisablable(ev) and  ep~=tp 
 	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	and Duel.IsExistingMatchingCard(s.filterM,tp,LOCATION_MZONE,0,1,nil)
-	and not Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_MZONE,0,1,nil,e:GetHandler():GetAttribute())
+	and not Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,e:GetHandler():GetAttribute())
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
