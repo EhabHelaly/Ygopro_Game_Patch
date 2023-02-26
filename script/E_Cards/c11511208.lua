@@ -19,18 +19,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 
 end
-function s.filterD(c)
-	return c:IsSetCard(0xffd) and c:IsAbleToDeck() 
-	and Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_DECK,0,1,nil,c)
+function s.filterH(c,tp)
+	return c:IsSetCard(0xffd) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	and Duel.IsExistingMatchingCard(s.filterD,tp,LOCATION_DECK,0,1,nil,c)
 end
-function s.filterH(c,tc)
+function s.filterD(c,tc)
 	return c:IsSetCard(0xffd) and c:GetLevel()==tc:GetLevel() and not c:IsAttribute(tc:GetAttribute()) and c:IsAbleToHand()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(s.filterD,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_HAND,0,1,nil,tp) end
 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.filterD,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_HAND,0,1,1,nil,tp)
 	e:SetLabelObject(g:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_SEARCH+CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_DECK,0,1,1,nil,tc)
+	local g=Duel.SelectMatchingCard(tp,s.filterD,tp,LOCATION_DECK,0,1,1,nil,tc)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

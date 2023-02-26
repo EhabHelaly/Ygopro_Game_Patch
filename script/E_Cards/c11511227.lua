@@ -51,7 +51,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
-	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and e:GetHandler():IsChainAttackable()
+	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and e:GetHandler():CanChainAttack()
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

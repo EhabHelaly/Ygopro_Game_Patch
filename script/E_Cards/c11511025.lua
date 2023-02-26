@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetValue(aux.tgval)
+	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
     --sp
     local e3=Effect.CreateEffect(c)

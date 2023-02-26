@@ -64,13 +64,13 @@ end
 function s.opset(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENCE)
+		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(Card.IsPosition,tp,0,LOCATION_ONFIELD,1,nil,POS_FACEDOWN) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
-	Duel.SelectTarget(tp,Card.IsPosition,tp,0,LOCATION_ONFIELD,1,1,nil,POS_FACEDOWN)
+	Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -2,7 +2,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Pendulum.AddProcedure(c)
+	--pendulum summon
+	Pendulum.AddProcedure(c,false)
 	--fusion summon rule
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit,nil,SUMMON_TYPE_FUSION)
@@ -48,7 +49,7 @@ function s.contactop(g,tp)
 	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
-	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
+	return e:GetHandler():GetLocation()~=LOCATION_EXTRA or e:GetHandler():IsFaceup()
 end
 function s.conSP(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==e:GetLabel()

@@ -44,7 +44,7 @@ function s.filterE(c)
 	return c:IsSetCard(0xffc) and c:IsType(TYPE_PENDULUM) and c:IsPosition(POS_FACEUP) and not c:IsCode(id)
 end
 function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(s.filterE,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filterE,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function s.op3(e,tp,eg,ep,ev,re,r,rp)

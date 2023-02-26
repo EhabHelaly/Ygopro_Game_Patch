@@ -56,15 +56,14 @@ function s.getAttributesNumber(tp)
 	local attributes={ATTRIBUTE_WIND,ATTRIBUTE_EARTH,ATTRIBUTE_LIGHT,ATTRIBUTE_DARK,ATTRIBUTE_WATER,ATTRIBUTE_FIRE}
 	local count=0
 	local att
-	for att=1,7 do
+	for att=1,6 do
 		if Duel.IsExistingMatchingCard(s.filterAtt,tp,LOCATION_MZONE,0,1,nil,attributes[att]) then count=count+1 end
 	end
 	return count
 end
 ---------------------------------------------------
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (e:GetHandler():GetTurnID()~=Duel.GetTurnCount() or e:GetHandler():IsReason(REASON_RETURN))
-		and s.getAttributesNumber(tp)==6
+	return Duel.GetTurnPlayer()==tp and s.getAttributesNumber(tp)==6
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
@@ -92,22 +91,22 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local ops={}
 	local opval={}
 	if Duel.IsExistingMatchingCard(s.dfilter1,tp,0,LOCATION_MZONE,1,nil) then
-		ops[off]=aux.Stringid(11511247,0)
+		ops[off]=aux.Stringid(id,0)
 		opval[off-1]=1
 		off=off+1
 	end
 	if Duel.IsExistingMatchingCard(s.dfilter2,tp,0,LOCATION_ONFIELD,1,nil) then
-		ops[off]=aux.Stringid(11511247,1)
+		ops[off]=aux.Stringid(id,1)
 		opval[off-1]=2
 		off=off+1
 	end
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=0 then
-		ops[off]=aux.Stringid(11511247,2)
+		ops[off]=aux.Stringid(id,2)
 		opval[off-1]=3
 		off=off+1
 	end
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>0 then
-		ops[off]=aux.Stringid(11511247,3)
+		ops[off]=aux.Stringid(id,3)
 		opval[off-1]=4
 		off=off+1
 	end

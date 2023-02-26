@@ -135,7 +135,7 @@ function s.operation3(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter4(c)
-	return c:IsSetCard(0xffd) and c:IsAbleToDeck()
+	return c:IsSetCard(0xffd) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
 end
 function s.target4(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter4,tp,LOCATION_GRAVE,0,1,nil) end

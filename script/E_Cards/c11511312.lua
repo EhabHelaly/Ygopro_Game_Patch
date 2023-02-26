@@ -1,12 +1,11 @@
 -- Kairem Sigma
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--pendulum summon
-	Pendulum.AddProcedure(c)
+	Pendulum.AddProcedure(c,false)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffc),4,2)
-	c:EnableReviveLimit()
-
 	-- Change Scale (Normal Summon)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)

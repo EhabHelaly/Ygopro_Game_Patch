@@ -1,12 +1,11 @@
 -- Kairem Xi
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--pendulum summon
-	Pendulum.AddProcedure(c)
+	Pendulum.AddProcedure(c,false)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffc),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xffc),1,1)
-	c:EnableReviveLimit()
-
 	-- unaffected by card (Synchro Summon)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

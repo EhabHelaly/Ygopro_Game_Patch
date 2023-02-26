@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.tg)
-	e2:SetTargetRange(L0CATION_MZONE,0)
+	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--Activate

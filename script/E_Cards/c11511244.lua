@@ -28,6 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	local c=e:GetHandler()
+	local fid=c:GetFieldID()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,ft,ft,nil,e,tp)
 	local tc=g:GetFirst()

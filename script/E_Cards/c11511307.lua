@@ -95,7 +95,7 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		local value=1
 		if tc:GetLeftScale()>0 and tc:GetRightScale()>0 then
-			value=Duel.SelectOption(tp,aux.Stringid(11511312,0),aux.Stringid(11511312,1))*-2+1
+			value=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))*-2+1
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

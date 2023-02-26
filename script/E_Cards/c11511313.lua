@@ -1,12 +1,11 @@
 -- Kairem Zeta
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--pendulum summon
-	Pendulum.AddProcedure(c)
+	Pendulum.AddProcedure(c,false)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xffc),6,2)
-	c:EnableReviveLimit()
-
 	-- attack twice (Xyz Summon)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)

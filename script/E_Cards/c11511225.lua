@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Destroy replace
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetRange(LOCATION_MZONE)

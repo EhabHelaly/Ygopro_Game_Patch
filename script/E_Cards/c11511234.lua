@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 					 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 					 and Duel.IsPlayerCanSpecialSummonMonster(tp,11511247,0,TYPES_TOKEN,1000,2000,4,RACE_DRAGON,0xffff)   end
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_SPSUMMON,0,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,0,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EFFECT_SET_BASE_DEFENCE)
+		e3:SetCode(EFFECT_SET_BASE_DEFENSE)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetValue(tc:GetBaseDefense())
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)

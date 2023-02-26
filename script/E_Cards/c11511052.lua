@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tg)
 end
-function s.tgcon(e)
+function s.tgcon(e,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)<4
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

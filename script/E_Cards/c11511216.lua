@@ -33,7 +33,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=tc:GetLevel()
 	local att=tc:GetAttribute()
 	
-	if Duel.SendtoGrave(tc,nil,REASON_EFFECT) then
+	if Duel.SendtoGrave(tc,REASON_EFFECT) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.filterSp,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,lv,att)
 		if g:GetCount()>0 then

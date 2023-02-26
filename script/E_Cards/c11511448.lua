@@ -78,7 +78,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(ec)
 	return ec:IsControler(tp) and c:GetEquipTarget()==ec and bc and bc:IsType(TYPE_MONSTER) 
-		and ec:IsChainAttackable(2,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
+		and ec:CanChainAttack(2,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

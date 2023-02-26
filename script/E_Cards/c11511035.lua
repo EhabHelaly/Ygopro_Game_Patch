@@ -29,7 +29,7 @@ end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsChainAttackable() and c:IsStatus(STATUS_OPPO_BATTLE) and not c:IsDisabled()
+	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:CanChainAttack() and c:IsStatus(STATUS_OPPO_BATTLE) and not c:IsDisabled()
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()

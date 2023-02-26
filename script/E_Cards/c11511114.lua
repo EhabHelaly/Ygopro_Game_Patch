@@ -31,5 +31,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc1==tc2 then tc2=g:GetNext() end
 	if not tc1:IsRelateToEffect(e) or not tc2:IsRelateToEffect(e) then return end
 		Duel.SendtoDeck(tc1,nil,0,REASON_EFFECT)
-		Duel.SendtoGrave(tc2,nil,0,REASON_EFFECT)
+		Duel.SendtoGrave(tc2,REASON_EFFECT)
 end
