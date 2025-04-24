@@ -23,20 +23,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0xffa) and c:IsMonster() and c:IsFaceup()
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetRace)>=4
 end
 function s.filterDes(c)
-	return c:IsDestructable() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsDestructable() and c:IsSpellTrap()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filterDes,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filterDes,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),nil,LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,nil,LOCATION_ONFIELD)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -71,7 +71,7 @@ function s.mop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filterf(c,e,tp)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0xffa) and c:IsMonster() and c:IsFaceup()
 end
 function s.fop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

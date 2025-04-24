@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)	
 	Duel.Hint(HINT_SELECTMSG,tp,562)
-	local rc=Duel.AnnounceAttribute(tp,1,0xffff-g:GetFirst():GetAttribute())
+	local rc=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL-g:GetFirst():GetAttribute())
 	e:SetLabel(rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 end

@@ -40,7 +40,7 @@ function s.initial_effect(c)
 
 end
 function s.filter1(c)
-	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:GetLevel()==4 
+	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsMonster() and c:GetLevel()==4 
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
@@ -49,7 +49,7 @@ end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
@@ -61,7 +61,7 @@ function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filterSP,1,nil,tp)
 end
 function s.filter2(c)
-	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsSpellTrap()
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil) end
@@ -70,7 +70,7 @@ end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

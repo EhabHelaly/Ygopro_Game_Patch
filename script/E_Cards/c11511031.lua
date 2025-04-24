@@ -30,10 +30,10 @@ function s.repfilter(c,tp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) end
-	if e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 		local g=eg:Filter(s.repfilter,nil,tp)
-		if g:GetCount()==1 then
+		if #g==1 then
 			e:SetLabelObject(g:GetFirst())
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)

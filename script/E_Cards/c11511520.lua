@@ -23,7 +23,7 @@ function s.filter(c,tp,race)
 	return c:IsControler(1-tp) and c:IsRace(race)
 end
 function s.filterSP(c,e,tp,eg)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xffa) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and eg:IsExists(s.filter,tp,nil,tp,c:GetRace()) 
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -35,7 +35,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filterSP,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,eg)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

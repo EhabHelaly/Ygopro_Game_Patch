@@ -69,7 +69,7 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filterS(c,lv)
-	return c:IsSetCard(0xfff) and c:IsType(TYPE_MONSTER) and c:GetLevel()==lv and c:IsAbleToHand()
+	return c:IsSetCard(0xfff) and c:IsMonster() and c:GetLevel()==lv and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -80,7 +80,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filterS,tp,LOCATION_DECK,0,1,1,nil,d)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

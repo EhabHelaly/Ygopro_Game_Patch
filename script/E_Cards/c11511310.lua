@@ -85,7 +85,7 @@ function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local sg=g:RandomSelect(1-tp,1)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
@@ -98,7 +98,7 @@ end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,s[tp],nil)
-	if g:GetCount() then
+	if #g then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end

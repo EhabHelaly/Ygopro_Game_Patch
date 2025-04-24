@@ -64,10 +64,10 @@ function s.repfilter(c,tp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return  Duel.GetTurnPlayer()~=tp and eg:IsExists(s.repfilter,1,nil,tp) end
-	if e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_EFFECT) and Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_EFFECT)
 		local g=eg:Filter(s.repfilter,nil,tp)
-		if g:GetCount()==1 then
+		if #g==1 then
 			e:SetLabelObject(g:GetFirst())
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
@@ -85,7 +85,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -35,11 +35,11 @@ function s.filterDes(c,tp)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filterDes,nil,tp)
-	if g:GetCount()==1 then e:SetLabel(g:GetFirst():GetLevel()) end
-	return g:GetCount()==1
+	if #g==1 then e:SetLabel(g:GetFirst():GetLevel()) end
+	return #g==1
 end
 function s.filterDeck(c,lv)
-	return c:IsSetCard(0xffc) and c:IsAbleToHand() and c:GetLevel()==lv and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xffc) and c:IsAbleToHand() and c:GetLevel()==lv and c:IsMonster()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filterDeck,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end
@@ -49,7 +49,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filterDeck,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

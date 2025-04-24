@@ -71,7 +71,7 @@ function s.addcop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_COST) end
@@ -88,7 +88,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xffd,1,REASON_EFFECT+REASON_REPLACE) end
-	return Duel.SelectYesNo(tp,aux.Stringid(id,0))
+	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(tp,0xffd,1,REASON_EFFECT+REASON_REPLACE)

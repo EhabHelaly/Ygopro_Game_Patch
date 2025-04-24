@@ -55,13 +55,11 @@ function s.desfilter(c,fid)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	if g then
-		if not g:IsExists(s.desfilter,1,nil,e:GetLabel()) then
-			g:DeleteGroup()
-			e:Reset()
-			return false
-		else return true end
-	else return false end
+	if not g:IsExists(s.desfilter,1,nil,e:GetLabel()) then
+		g:DeleteGroup()
+		e:Reset()
+		return false
+	else return true end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=e:GetLabelObject()

@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--remove overlay replace
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,2))
+	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e6:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
 	e6:SetRange(LOCATION_SZONE)
@@ -62,7 +62,7 @@ s.cardsList = {}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	s.cardsList = {}
-	for i=1,g:GetCount() do
+	for i=1,#g do
 		local c
 		if i==1 then c = g:GetFirst() else c = g:GetNext() end
 		local card_info = {}
@@ -111,7 +111,7 @@ end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_RULE)
 		and e:GetHandler():GetCounter(0xfff)>1 end
-	return Duel.SelectYesNo(tp,aux.Stringid(id,1))
+	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0xfff,2,REASON_EFFECT)

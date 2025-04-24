@@ -68,5 +68,5 @@ function s.filter(c)
 	return c:IsFaceup() and (c:IsLocation(LOCATION_SZONE) or c:IsType(TYPE_EFFECT)) and not c:IsDisabled()
 end
 function s.aclimit(e,re,tp)
-	return (re:IsActiveType(TYPE_MONSTER)or re:GetHandler():IsType(TYPE_SPELL) or re:GetHandler():IsType(TYPE_TRAP) ) and not re:GetHandler():IsImmuneToEffect(e)
+	return (re:IsActiveType(TYPE_MONSTER) or re:GetHandler():IsSpellTrap()) and not re:GetHandler():IsImmuneToEffect(e)
 end

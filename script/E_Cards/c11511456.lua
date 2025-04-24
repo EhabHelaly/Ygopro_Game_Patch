@@ -20,7 +20,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,bc)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		local at=Duel.GetAttacker()

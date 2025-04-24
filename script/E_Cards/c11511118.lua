@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if e:GetLabel()==1 then
             Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
             local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
-            if g:GetCount()>0 then
+            if #g>0 then
                 Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
             end
 		end
@@ -92,7 +92,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_SZONE,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_SZONE,0,nil)

@@ -61,7 +61,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local sg=g:RandomSelect(1-tp,1)
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 	end

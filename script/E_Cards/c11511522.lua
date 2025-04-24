@@ -33,7 +33,7 @@ function s.filterF(c)
 	return c:IsSetCard(0xffa) and c:IsFusionAttribute(ATTRIBUTE_FIRE)
 end
 function s.filter(c)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0xffa) and c:IsMonster() and c:IsFaceup()
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION 

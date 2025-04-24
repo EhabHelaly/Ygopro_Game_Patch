@@ -42,7 +42,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0xffc,fc,sumtype,tp)
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_GRAVE,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -65,7 +65,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -78,7 +78,7 @@ function s.filterH(c)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filterH, tp, 0, LOCATION_MZONE, nil)
-	if g:GetCount() then
+	if #g then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
@@ -93,7 +93,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if tcr and tcr:IsSetCard(0xffc) then pScales=pScales+tcr:GetRightScale() end
 	local g=Duel.GetMatchingGroup(s.atkfilter, tp, 0, LOCATION_MZONE, nil,e)
 
-	if g:GetCount() then
+	if #g then
 		local rc=g:GetFirst()
 		while rc do
 			local e1=Effect.CreateEffect(e:GetHandler())

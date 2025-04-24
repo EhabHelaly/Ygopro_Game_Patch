@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,11511247,0,TYPES_TOKEN,0,0,4,RACE_DRAGON,0xffff) 
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			local att=Duel.AnnounceAttribute(tp, 1, 0xffff) 
+			local att=Duel.AnnounceAttribute(tp, 1, ATTRIBUTE_ALL) 
 			local token=Duel.CreateToken(tp,11511247)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())

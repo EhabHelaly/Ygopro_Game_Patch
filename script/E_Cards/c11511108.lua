@@ -6,12 +6,11 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.sptg)
+	e1:SetCost(s.spcost)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--equip
@@ -48,21 +47,19 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsCode(39111158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
 	local b2=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and (b1 or b2) end
 	if b1 and b2 then
-		local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+		local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 		e:SetLabel(opt)
 		e:GetHandler():RemoveOverlayCard(tp,opt+1,opt+1,REASON_COST)
 	elseif b1 then
-		Duel.SelectOption(tp,aux.Stringid(id,1))
 		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 		e:SetLabel(0)
 	else
-		Duel.SelectOption(tp,aux.Stringid(id,2))
 		e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 		e:SetLabel(1)
 	end

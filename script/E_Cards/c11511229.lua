@@ -29,7 +29,7 @@ function s.filterS(c,att)
 	return c:IsSetCard(0xffd) and c:IsAttribute(att)
 end
 function s.filterC(c)
-	return c:IsSetCard(0xffd) and c:IsType(TYPE_MONSTER) and c:IsCanAddCounter(0xffd,1)
+	return c:IsSetCard(0xffd) and c:IsMonster() and c:IsCanAddCounter(0xffd,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filterC,tp,LOCATION_MZONE,0,1,nil) end
@@ -38,7 +38,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filterC,tp,LOCATION_MZONE,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		g:GetFirst():AddCounter(0xffd,1)
 	end
 end

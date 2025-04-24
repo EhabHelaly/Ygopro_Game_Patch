@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xffd) and c:GetPreviousControler()==tp and c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xffd) and c:GetPreviousControler()==tp and c:IsLocation(LOCATION_GRAVE) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) 
@@ -41,9 +41,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 	and Duel.IsPlayerCanSpecialSummonMonster(tp,11511247,0,TYPES_TOKEN,1000,2000,4,RACE_DRAGON,0xffff) then
 		local g=eg:Filter(s.cfilter,nil,tp)
-		if not g or g:GetCount()==0 then return end
+		if not g or #g==0 then return end
 		local tc
-		if g:GetCount()==1 then tc=g:GetFirst()
+		if #g==1 then tc=g:GetFirst()
 		else tc=g:Select(tp,1,1,nil):GetFirst() end
 
 		local token=Duel.CreateToken(tp,11511247)

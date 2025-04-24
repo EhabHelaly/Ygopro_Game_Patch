@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.rdtarget)
 	e3:SetOperation(s.rdoperation)
@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -79,7 +79,7 @@ end
 function s.rdoperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.rdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
         Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end

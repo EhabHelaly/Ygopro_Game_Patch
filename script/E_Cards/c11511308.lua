@@ -71,14 +71,14 @@ function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(e:GetHandler(),REASON_EFFECT) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.filterG,tp,LOCATION_GRAVE,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end
 end
 
 function s.filter(c)
-	return c:IsSetCard(0xffc) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0xffc) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -87,7 +87,7 @@ end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

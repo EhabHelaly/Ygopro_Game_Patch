@@ -44,13 +44,13 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filterPC,tp,LOCATION_EXTRA,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 	    Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
 
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_MZONE) and ep~=tp 
+	return re:GetHandler():IsMonster() and re:GetHandler():IsLocation(LOCATION_MZONE) and ep~=tp 
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -72,7 +72,7 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 	Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
 end
@@ -93,9 +93,9 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=eg:Filter(s.dfilter,nil,tp)
 		g:KeepAlive()
 		e:SetLabelObject(g)
-		return g:GetCount()>0
+		return #g>0
 	end
-	return Duel.SelectYesNo(tp,aux.Stringid(id,0))
+	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.value(e,c)
 	return c:IsFaceup() and c:GetLocation()==LOCATION_MZONE and c:IsSetCard(0xffb) 

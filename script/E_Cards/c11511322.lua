@@ -39,7 +39,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.dfilter(c)
-	return c:IsSetCard(0xffc) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xffc) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	return e:GetHandler():GetEquipTarget()

@@ -28,7 +28,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
 			--Race
 			Duel.Hint(HINT_SELECTMSG,tp,563)
-			local race=Duel.AnnounceRace(tp,1,0xffffff - c:GetRace())
+			local race=Duel.AnnounceRace(tp,1,RACE_ALL - c:GetRace())
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
@@ -39,7 +39,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			--Attribute
 			Duel.Hint(HINT_SELECTMSG,tp,562)
-			local att=Duel.AnnounceAttribute(tp,1,0xffff - c:GetAttribute())
+			local att=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL - c:GetAttribute())
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
@@ -83,7 +83,7 @@ function s.ftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.fop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end

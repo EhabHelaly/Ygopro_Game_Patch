@@ -109,7 +109,7 @@ end
 function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter3,tp,LOCATION_MZONE,0,1,1,nil) 
-	if g:GetCount() and Duel.Destroy(g,REASON_EFFECT) then 
+	if #g and Duel.Destroy(g,REASON_EFFECT) then 
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
 	end

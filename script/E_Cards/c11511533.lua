@@ -21,7 +21,7 @@ function s.filterF(c)
 	return c:IsSetCard(0xffa) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsType(TYPE_MONSTER) and rp~=tp and Duel.IsChainNegatable(ev)
+	return re:GetHandler():IsMonster() and rp~=tp and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsDiscardable() and c:IsSetCard(0xffb) and c:IsType(TYPE_MONSTER)
+	return c:IsDiscardable() and c:IsSetCard(0xffb) and c:IsMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:GetHandler():IsType(TYPE_MONSTER))
+	return ep~=tp and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:GetHandler():IsMonster())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

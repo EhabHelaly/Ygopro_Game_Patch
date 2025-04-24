@@ -20,7 +20,7 @@ function s.initial_effect(c)
 
 end
 function s.filterH(c,tp)
-	return c:IsSetCard(0xffd) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0xffd) and c:IsMonster() and c:IsAbleToDeck()
 	and Duel.IsExistingMatchingCard(s.filterD,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.filterD(c,tc)
@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filterD,tp,LOCATION_DECK,0,1,1,nil,tc)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

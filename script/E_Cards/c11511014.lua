@@ -63,8 +63,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.filter,nil,e,tp)
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if ct<=1 or g:GetCount()==0 then return end
-		if g:GetCount()>ct-1 then
+		if ct<=1 or #g==0 then return end
+		if #g>ct-1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			g=g:Select(tp,ct,ct,nil)
 		end

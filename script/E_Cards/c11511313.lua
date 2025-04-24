@@ -76,7 +76,7 @@ function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_PZONE,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local tc=g:GetFirst()
 		local value=1
 		if tc:GetLeftScale()>0 and tc:GetRightScale()>0 then
@@ -99,7 +99,7 @@ function s.filter3(c)
 end
 function s.op3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter3,tp,LOCATION_MZONE,0,nil)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 
 	local sc=g:GetFirst()
 	local c=e:GetHandler()
@@ -125,7 +125,7 @@ end
 function s.op4(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter4,tp,LOCATION_MZONE,0,1,1,nil) 
-	if g:GetCount() and Duel.Destroy(g,REASON_EFFECT) then 
+	if #g and Duel.Destroy(g,REASON_EFFECT) then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g2=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		if g2:GetCount() then 

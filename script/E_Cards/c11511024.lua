@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
  		local g1=e:GetHandler():GetOverlayGroup()
 		local g2=g1.Filter(g1,s.filter,nil,e,tp)
 		local g=g2:Select(tp,1,1,nil)
-        if g:GetCount()>0 then
+        if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
         end
 end

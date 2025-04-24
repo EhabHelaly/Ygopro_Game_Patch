@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 
 function s.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:GetControler()~=tp and c:GetPreviousControler()~=tp
+	return c:IsMonster() and c:GetControler()~=tp and c:GetPreviousControler()~=tp
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	return bit.band(r,REASON_DESTROY+REASON_EFFECT)==REASON_DESTROY+REASON_EFFECT 

@@ -56,7 +56,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
-	if g:GetCount() then
+	if #g then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end

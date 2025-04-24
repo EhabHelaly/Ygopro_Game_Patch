@@ -29,7 +29,7 @@ function s.filterS(c,att)
 	return c:IsSetCard(0xffd) and c:IsAttribute(att) 
 end
 function s.filter(c)
-	return c:IsSetCard(0xffd) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0xffd) and c:IsMonster() and c:IsFaceup()
 	and c:GetAttribute()~=ATTRIBUTE_DARK+ATTRIBUTE_EARTH+ATTRIBUTE_WIND+ATTRIBUTE_LIGHT+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_DIVINE
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -37,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)	
 	Duel.Hint(HINT_SELECTMSG,tp,562)
-	local att=Duel.AnnounceAttribute(tp,1,0xffff-g:GetFirst():GetAttribute())
+	local att=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL-g:GetFirst():GetAttribute())
 	e:SetLabel(att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

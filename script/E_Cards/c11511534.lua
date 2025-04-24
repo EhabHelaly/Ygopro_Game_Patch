@@ -46,19 +46,19 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:SetLabel(races)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,nil,races)
-	if chk==0 then return g:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),1-tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,1-tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,nil,e:GetLabel())
-	if g:GetCount()>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT) then
+	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT) then
 		local c=e:GetHandler()
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_ATKCHANGE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetValue(g:GetCount()*400)
+		e1:SetValue(#g*400)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 

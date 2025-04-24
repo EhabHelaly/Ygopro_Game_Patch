@@ -31,17 +31,17 @@ function s.costRev(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c:IsType(TYPE_SPELL+TYPE_TRAP) and chkc:IsCanBeEffectTarget(e) end
+	if chkc then return c:IsSpellTrap() and chkc:IsCanBeEffectTarget(e) end
 	if chk==0 then
 		return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,2,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

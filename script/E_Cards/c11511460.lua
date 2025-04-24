@@ -25,7 +25,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	ft=ft-1;
-	if g:GetCount()>0 then
+	if #g>0 then
 		local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
 		g2:Remove(Card.IsCode,nil,g:GetFirst():GetCode())
 		while g2:GetCount()>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0))do

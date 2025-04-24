@@ -45,7 +45,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.rpfilter,tp,0,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local tg=g:GetMinGroup(Card.GetAttack)
 		if tg:GetCount()>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

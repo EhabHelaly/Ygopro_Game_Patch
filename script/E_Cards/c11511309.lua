@@ -42,7 +42,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0xffc,fc,sumtype,tp)
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_GRAVE,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -57,12 +57,12 @@ end
 
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_ONFIELD,nil,POS_FACEDOWN)
-	if chk==0 then return g:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,0,LOCATION_ONFIELD,nil,POS_FACEDOWN)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

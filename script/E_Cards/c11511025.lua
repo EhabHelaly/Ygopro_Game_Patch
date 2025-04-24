@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.retfilter(c)
-    return c:IsAbleToDeck() and c:IsSetCard(0xfff) and c:IsType(TYPE_MONSTER)
+    return c:IsAbleToDeck() and c:IsSetCard(0xfff) and c:IsMonster()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.retfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	local g=Duel.GetMatchingGroup(s.retfilter,tp,LOCATION_REMOVED,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.retfilter,tp,LOCATION_REMOVED,0,nil)

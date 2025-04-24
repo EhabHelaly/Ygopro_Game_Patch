@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if	Duel.SendtoDeck(tc,nil,0,REASON_EFFECT) then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
         local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetLevel(),tc:GetRace())
-        if g:GetCount()>0 then
+        if #g>0 then
             Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
         end
     end

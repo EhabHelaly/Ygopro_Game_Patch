@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetTarget(s.targetH)
 	e2:SetOperation(s.operationH)
 	c:RegisterEffect(e2)
@@ -23,14 +23,14 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetTarget(s.targetS)
 	e3:SetOperation(s.operationS)
 	c:RegisterEffect(e3)
 
 end
 function s.filterH(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DIVINE) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_DIVINE) and c:IsAbleToHand()
 end
 function s.targetH(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_DECK,0,1,nil) end
@@ -40,7 +40,7 @@ function s.operationH(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleDeck(tp)
@@ -58,7 +58,7 @@ function s.operationS(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filterS,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local tc=g:GetFirst() 
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 		--to hand

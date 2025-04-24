@@ -38,17 +38,17 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.retfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	local g=Duel.GetMatchingGroup(s.retfilter,tp,LOCATION_REMOVED,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.retfilter,tp,LOCATION_REMOVED,0,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function s.filterH(c)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xffa) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filterG(c)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0xffa) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filterG,tp,LOCATION_DECK,0,1,nil)
@@ -59,10 +59,10 @@ end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT) then
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		g=Duel.SelectMatchingCard(tp,s.filterG,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	end

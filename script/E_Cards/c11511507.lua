@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return c:IsSetCard(0xffa) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xffa) and c:IsMonster()
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

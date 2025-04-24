@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsSetCard(0xfff) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xfff) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0xfff) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0xfff) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,e:GetHandler()) end

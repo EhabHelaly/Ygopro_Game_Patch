@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local atk=g:GetCount()*300
+	local atk=#g*300
 	local c=e:GetHandler()
 	local tc=g:GetFirst()
 	while tc do

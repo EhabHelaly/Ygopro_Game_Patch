@@ -14,11 +14,11 @@ end
 function s.filterF(c,e,tp,tc)
 	local min=1
 	if tc then min=2 end
-	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER) 
+	return c:IsSetCard(0xffb) and c:IsAbleToHand() and c:IsMonster() 
 		and Duel.IsExistingMatchingCard(s.filterH,tp,LOCATION_HAND,0,min,nil,e,tp,c,tc)
 end
 function s.filterH(c,e,tp,rc,tc)
-	return c:IsSetCard(0xffb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_MONSTER) 
+	return c:IsSetCard(0xffb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsMonster() 
 	and not c:IsCode(rc:GetCode()) and not (tc and c:IsCode(tc:GetCode()) )
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -35,8 +35,8 @@ function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		g:Merge(Duel.SelectTarget(tp,s.filterF,tp,LOCATION_MZONE,0,1,1,tc1,e,tp,tc1))
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,g:GetCount(),tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,tp,LOCATION_MZONE)
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
@@ -45,6 +45,6 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=g:GetNext()
 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_HAND,0,g:GetCount(),g:GetCount(),nil,e,tp,tc1,tc2)
+	g=Duel.SelectMatchingCard(tp,s.filterH,tp,LOCATION_HAND,0,#g,#g,nil,e,tp,tc1,tc2)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end

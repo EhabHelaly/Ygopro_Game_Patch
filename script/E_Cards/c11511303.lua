@@ -40,14 +40,14 @@ function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filterPC,tp,LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoExtraP(g:GetFirst(),tp,REASON_EFFECT)
 	end
 end
 
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return re:GetHandler():IsType(TYPE_MONSTER) and loc==LOCATION_GRAVE and ep~=tp and Duel.IsChainNegatable(ev)
+	return re:GetHandler():IsMonster() and loc==LOCATION_GRAVE and ep~=tp and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -75,7 +75,7 @@ function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local sg=g:RandomSelect(1-tp,1)
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 	end

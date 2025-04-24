@@ -29,7 +29,7 @@ function s.con(e)
 	return ph==PHASE_BATTLE or ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL
 end
 function s.aclimit(e,re,tp)
-	return (re:IsActiveType(TYPE_MONSTER)or re:GetHandler():IsType(TYPE_SPELL) or re:GetHandler():IsType(TYPE_TRAP) ) and not re:GetHandler():IsImmuneToEffect(e)
+	return (re:IsActiveType(TYPE_MONSTER) or re:GetHandler():IsSpellTrap()) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
