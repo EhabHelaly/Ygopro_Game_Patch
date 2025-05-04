@@ -1,0 +1,4 @@
+*.jpeg
+*.png
+**/Thumbs.db
+tcgb_editor/in_progress
