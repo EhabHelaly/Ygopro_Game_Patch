@@ -1,4 +1,4 @@
---The Demon King 
+--SW Demon King
 local s,id=GetID()
 function s.initial_effect(c)
 	--sp

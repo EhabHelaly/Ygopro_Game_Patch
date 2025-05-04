@@ -1,4 +1,4 @@
--- Kairem Iota
+--Kairem Iota
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

@@ -1,4 +1,4 @@
---Elemental Machine Virus
+--Elemental Machine Maleware
 local s,id=GetID()
 function s.initial_effect(c)
     --Link Summon

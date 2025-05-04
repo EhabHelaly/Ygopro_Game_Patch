@@ -1,4 +1,4 @@
--- Kairem Dragon Claw
+--Kairem Dragon Claw
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xffc))

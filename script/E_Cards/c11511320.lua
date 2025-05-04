@@ -1,4 +1,4 @@
--- Ancient Book of Kairem
+--Ancient Book of Kairem
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

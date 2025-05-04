@@ -1,4 +1,4 @@
--- Art of Anchient Witchery
+--Art of Anchient Witchery
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
